@@ -5,12 +5,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import { useKeycloak } from "@react-keycloak/web";
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Logout'];
+const pages = ['Liste des films', 'Ajout', 'Exporter', 'Admin'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -30,6 +29,8 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const { keycloak, initialized } = useKeycloak();
 
   return (
     <AppBar position="static">
@@ -56,7 +57,6 @@ function ResponsiveAppBar() {
           
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           
-            
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -112,8 +112,9 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-
-          <Button color="inherit">Logout</Button>
+          {!!keycloak.authenticated && (
+          <Button color="inherit" onClick={() => keycloak.logout()}>Logout ({keycloak.tokenParsed.preferred_username})</Button>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

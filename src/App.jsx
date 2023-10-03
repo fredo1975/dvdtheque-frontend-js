@@ -9,7 +9,8 @@ import SecuredPage from "./pages/Securedpage";
 function App() {
  return (
    <div>
-     <ReactKeycloakProvider authClient={keycloak}>
+     <ReactKeycloakProvider authClient={keycloak}
+     initOptions={{ onLoad: 'login-required' }}>
        <ResponsiveAppBar />
        <BrowserRouter>
          <Routes>
