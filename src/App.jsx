@@ -11,8 +11,8 @@ function App() {
    <div>
      <ReactKeycloakProvider authClient={keycloak}
      initOptions={{ onLoad: 'login-required' }}>
+      <BrowserRouter>
        <ResponsiveAppBar />
-       <BrowserRouter>
          <Routes>
            <Route exact path="/" element={<WelcomePage />} />
            <Route path="/secured" element={<SecuredPage />} />
