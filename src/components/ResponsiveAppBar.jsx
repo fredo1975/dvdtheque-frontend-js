@@ -3,17 +3,9 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
 import { useKeycloak } from "@react-keycloak/web";
-import WelcomePage from "../pages/Homepage";
-import SecuredPage from "../pages/Securedpage";
-import AdbIcon from '@mui/icons-material/Adb';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const pages = ['Liste des films', 'Ajout', 'Exporter', 'Admin'];
 
@@ -72,21 +64,21 @@ function ResponsiveAppBar() {
                                 key="ajout"
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}>
-                                <Link to="/secured" className="nav-link">Ajout</Link>
+                                <Link to="/film-add" className="nav-link">Ajout</Link>
                             </Button>
 
                             <Button
                                 key="exporter"
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}>
-                                <Link to="/secured" className="nav-link">Exporter</Link>
+                                <Link to="/film-export" className="nav-link">Exporter</Link>
                             </Button>
 
                             <Button
                                 key="admin"
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}>
-                                <Link to="/secured" className="nav-link">Admin</Link>
+                                <Link to="/admin" className="nav-link">Admin</Link>
                             </Button>
                         </Box>
                     </Typography>
