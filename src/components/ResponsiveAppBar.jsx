@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const pages = ['Liste des films', 'Ajout', 'Exporter', 'Admin'];
 
-function ResponsiveAppBar() {
+const ResponsiveAppBar = () =>  {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 

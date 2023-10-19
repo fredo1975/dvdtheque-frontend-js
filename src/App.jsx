@@ -7,6 +7,7 @@ import FilmList from "./pages/FilmList";
 import FilmExport from "./pages/FilmExport";
 import FilmAdd from "./pages/FilmAdd";
 import Admin from "./pages/Admin";
+import FilmDetail from "./pages/FilmDetail";
 
 function App() {
  return (
@@ -19,6 +20,7 @@ function App() {
            <Route path="/film-add" element={<FilmAdd />} />
            <Route path="/film-export" element={<FilmExport />} />
            <Route path="/admin" element={<Admin />} />
+           <Route path="/film-detail" element={<FilmDetail />} />
          </Routes>
        </BrowserRouter>
        </ReactKeycloakProvider>
