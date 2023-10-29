@@ -70,7 +70,7 @@ const FilmList = () => {
       <Grid container spacing={{ xs: 1, md: 1 }} columns={{ xs: 2, sm: 3, md: 12 }}>
         {post.map((p, index) => (
           <Grid key={index} className="myDiv">
-            <Card sx={{ maxWidth: 200 }}>
+            <Card key={index} sx={{ maxWidth: 200 }}>
               <CardActionArea component={Link} to={'/film-detail/'+p.id}>
                 <CardMedia
                   component="img"

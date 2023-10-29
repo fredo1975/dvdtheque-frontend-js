@@ -180,8 +180,7 @@ const FilterBar = ({changeFilter}) => {
                             id="origine-select"
                             value={origine}
                             label="Origine"
-                            onChange={handleChangeOrigine}
-                        >
+                            onChange={handleChangeOrigine}>
                             <MenuItem value={DVD}>Dvd</MenuItem>
                             <MenuItem value={EN_SALLE}>En salle</MenuItem>
                             <MenuItem value={CANAL_PLUS}>Canal +</MenuItem>
@@ -198,8 +197,7 @@ const FilterBar = ({changeFilter}) => {
                             id="categorie-select"
                             value={categorie}
                             label="Catégorie"
-                            onChange={handleChangeCategorie}
-                        >
+                            onChange={handleChangeCategorie} >
                             {allCategories && allCategories.map((p, index) => (
                                 <MenuItem key={p} value={p.name}>{p.name}</MenuItem>
                             ))}
@@ -214,8 +212,7 @@ const FilterBar = ({changeFilter}) => {
                             id="dejavu-select"
                             value={dejavu}
                             label="Déjà Vu"
-                            onChange={handleChangeDejavu}
-                        >
+                            onChange={handleChangeDejavu}>
                              {vuOptions && vuOptions.map((p, index) => (
                                 <MenuItem key={p} value={p}>{p}</MenuItem>
                             ))}
@@ -230,8 +227,7 @@ const FilterBar = ({changeFilter}) => {
                             id="rip-select"
                             value={rip}
                             label="Rippé"
-                            onChange={handleChangeRip}
-                        >
+                            onChange={handleChangeRip}>
                             {rippedOptions && rippedOptions.map((p, index) => (
                                 <MenuItem key={p} value={p}>{p}</MenuItem>
                             ))}
