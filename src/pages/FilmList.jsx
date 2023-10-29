@@ -10,10 +10,12 @@ import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import TablePagination from '@mui/material/TablePagination';
+import { Link } from "react-router-dom";
 
 const paginatedSearch = '/dvdtheque-service/films/paginatedSarch'
 const defaultQuery = 'origine:eq:DVD:AND,'
 const defaultSort = '-dateInsertion,+titre'
+
 const FilmList = () => {
   const [post, setPost] = useState(null);
   const { axiosInstance, initialized } = useAxios(null);
@@ -31,7 +33,7 @@ const FilmList = () => {
     setPage(0);
   };
   const changeFilter = (newFilter,newSort) => {
-    console.log('FilmList changeFilter',newFilter,newSort);
+    //console.log('FilmList changeFilter',newFilter,newSort);
     setNewFilter(newFilter);
     setNewSort(newSort)
   }
@@ -54,7 +56,7 @@ const FilmList = () => {
       .then((response) => {
         setPost(response.data.content);
         setCount(response.data.totalElements);
-        console.log('response', response);
+        //console.log('response', response);
       }).catch(error => console.error(error));
 
   }, [initialized, page, rowsPerPage,newFilter,newSort]);
@@ -69,20 +71,59 @@ const FilmList = () => {
         {post.map((p, index) => (
           <Grid key={index} className="myDiv">
             <Card sx={{ maxWidth: 200 }}>
-              <CardActionArea>
+              <CardActionArea component={Link} to={'/film-detail/'+p.id}>
                 <CardMedia
                   component="img"
                   height="305"
                   width="200"
-                  image={p.posterPath}/>
+                  image={p.posterPath}
+                  title={p.titre}/>
                 <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    {p.titre}
-                  </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Durée : {p.runtime}
                   </Typography>
-
+                  {
+                    p.dvd && p.origine === 'DVD' && p.dvd.ripped &&
+                    (
+                      <Typography variant="body2" color="text.secondary">
+                    {p.origine} Rippé : &nbsp;<img
+                        src="src/assets/img/ko.png"></img>
+                  </Typography>
+                    )
+                  }
+                  {
+                    p.dvd && p.origine === 'DVD' && !p.dvd.ripped &&
+                    (
+                      <Typography variant="body2" color="text.secondary">
+                    {p.origine} Rippé : &nbsp;<img
+                        src="src/assets/img/ok.png"></img>
+                  </Typography>
+                    )
+                  }
+                  {
+                    p.origine != 'DVD' &&
+                    (
+                      <Typography variant="body2" color="text.secondary">
+                    Origine : &nbsp;{p.origine}
+                  </Typography>
+                    )
+                  }
+                  {
+                    p.vu &&
+                    (
+                      <Typography variant="body2" color="text.secondary">
+                    Vu : &nbsp; <img src="src/assets/img/ok.png"/>
+                  </Typography>
+                    )
+                  }
+                  {
+                    !p.vu &&
+                    (
+                      <Typography variant="body2" color="text.secondary">
+                    Vu : &nbsp; <img src="src/assets/img/ko.png"/>
+                  </Typography>
+                    )
+                  }
                 </CardContent>
               </CardActionArea>
             </Card>

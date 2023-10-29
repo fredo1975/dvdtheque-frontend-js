@@ -98,7 +98,7 @@ const FilterBar = ({changeFilter}) => {
         }
         if(categorie){
             //console.log('filter categorie is not null',categorie)
-            query += 'categorie:eq:'+categorie+':AND,'
+            query += 'genre:eq:'+categorie+':AND,'
         }
         if(dejavu){
             //console.log('filter dejavu is not null',dejavu)
@@ -119,14 +119,12 @@ const FilterBar = ({changeFilter}) => {
         return query
     }
     const filter = () => {
-        //console.log('filter')
         const query = buildQuery()
         const sort = buildSort()
-        console.log('filter',query,sort)
+        //console.log('filter',query,sort)
         changeFilter(query,sort)
     };
     const resetFilter = () => {
-        //console.log('filter')
         titre.value = ''
         realisateur.value = ''
         acteur.value = ''
@@ -136,7 +134,7 @@ const FilterBar = ({changeFilter}) => {
         setRip('')
         setSort('')
         const query = '';
-        console.log('filter',query)
+        //console.log('filter',query)
         changeFilter(query)
     };
     const BootstrapButton = styled(Button)({
@@ -203,7 +201,7 @@ const FilterBar = ({changeFilter}) => {
                             onChange={handleChangeCategorie}
                         >
                             {allCategories && allCategories.map((p, index) => (
-                                <MenuItem value={p.name}>{p.name}</MenuItem>
+                                <MenuItem key={p} value={p.name}>{p.name}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -219,7 +217,7 @@ const FilterBar = ({changeFilter}) => {
                             onChange={handleChangeDejavu}
                         >
                              {vuOptions && vuOptions.map((p, index) => (
-                                <MenuItem value={p}>{p}</MenuItem>
+                                <MenuItem key={p} value={p}>{p}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -235,7 +233,7 @@ const FilterBar = ({changeFilter}) => {
                             onChange={handleChangeRip}
                         >
                             {rippedOptions && rippedOptions.map((p, index) => (
-                                <MenuItem value={p}>{p}</MenuItem>
+                                <MenuItem key={p} value={p}>{p}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -251,7 +249,7 @@ const FilterBar = ({changeFilter}) => {
                             onChange={handleChangeSort}
                         >
                             {sortByOptions && sortByOptions.map((p, index) => (
-                                <MenuItem value={p}>{p}</MenuItem>
+                                <MenuItem key={p} value={p}>{p}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>

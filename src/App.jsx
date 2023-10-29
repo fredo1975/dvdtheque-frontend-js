@@ -20,7 +20,7 @@ function App() {
            <Route path="/film-add" element={<FilmAdd />} />
            <Route path="/film-export" element={<FilmExport />} />
            <Route path="/admin" element={<Admin />} />
-           <Route path="/film-detail" element={<FilmDetail />} />
+           <Route path="/film-detail/:id" element={<FilmDetail />} />
          </Routes>
        </BrowserRouter>
        </ReactKeycloakProvider>
