@@ -5,19 +5,24 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { useAxios } from "../helpers/axios-hook";
+import FilterBar from "../components/FilterBar";
 import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import TablePagination from '@mui/material/TablePagination';
 
-const baseURL = '/dvdtheque-service/films';
 const paginatedSearch = '/dvdtheque-service/films/paginatedSarch'
+const defaultQuery = 'origine:eq:DVD:AND,'
+const defaultSort = '-dateInsertion,+titre'
 const FilmList = () => {
   const [post, setPost] = useState(null);
-  const {axiosInstance, initialized} = useAxios(null);
+  const { axiosInstance, initialized } = useAxios(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [count, setCount] = useState(0);
+  const [newFilter, setNewFilter] = useState('');
+  const [newSort, setNewSort] = useState('');
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -25,7 +30,11 @@ const FilmList = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  const changeFilter = (newFilter,newSort) => {
+    console.log('FilmList changeFilter',newFilter,newSort);
+    setNewFilter(newFilter);
+    setNewSort(newSort)
+  }
   useEffect(() => {
     //console.log('FilmList initialized',initialized);
     if (!initialized) {
@@ -33,63 +42,63 @@ const FilmList = () => {
     }
     //console.log('axiosInstance',axiosInstance.instance.get(baseURL));
     //const instance = axios.create;
-    console.log('FilmList rowsPerPage',page);
-    axiosInstance.instance.get(paginatedSearch, {timeout: 1500,
+    axiosInstance.instance.get(paginatedSearch, {
+      timeout: 1500,
       params: {
-        query: 'origine:eq:DVD:AND,',
-        sort: '-dateInsertion,+titre',
-        offset: page+1,
+        query: newFilter?newFilter:defaultQuery,
+        sort: newSort?newSort:defaultSort,
+        offset: page + 1,
         limit: rowsPerPage
-      }})
-    .then((response) => {
-      setPost(response.data.content);
-      setCount(response.data.totalElements);
-      console.log('response',response);
-    }).catch(error => console.error(error));
-    
-  }, [initialized,page,rowsPerPage]);
+      }
+    })
+      .then((response) => {
+        setPost(response.data.content);
+        setCount(response.data.totalElements);
+        console.log('response', response);
+      }).catch(error => console.error(error));
+
+  }, [initialized, page, rowsPerPage,newFilter,newSort]);
 
   if (!post) return null;
 
   return (
 
-<Box sx={{ flexGrow: 1 }} >
-    <Grid container spacing={{ xs: 1, md: 1 }} columns={{ xs: 2, sm: 4, md: 12 }}>
-  {post.map((p, index) => (
-    <Grid xs={1} key={index} className="myDiv">
-      <Card sx={{ maxWidth: 200 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="305"
-          width="200"
-          image={p.posterPath}
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-          {p.titre}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-          Durée : {p.runtime}
-          </Typography>
-          
-        </CardContent>
-      </CardActionArea>
-    </Card>
-    </Grid>
-  ))}
-</Grid>
+    <Box sx={{ flexGrow: 1 }} >
+      <FilterBar changeFilter={changeFilter}></FilterBar>
+      <Grid container spacing={{ xs: 1, md: 1 }} columns={{ xs: 2, sm: 3, md: 12 }}>
+        {post.map((p, index) => (
+          <Grid key={index} className="myDiv">
+            <Card sx={{ maxWidth: 200 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="305"
+                  width="200"
+                  image={p.posterPath}/>
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    {p.titre}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Durée : {p.runtime}
+                  </Typography>
 
-<TablePagination
-  component="div"
-  count={count}
-  page={page}
-  onPageChange={handleChangePage}
-  rowsPerPage={rowsPerPage}
-  onRowsPerPageChange={handleChangeRowsPerPage}
-/>
-</Box>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
+      <TablePagination
+        component="div"
+        count={count}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Box>
   );
 };
 

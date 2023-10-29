@@ -1,4 +1,7 @@
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
 
 .nav-link {
   color: white;
@@ -24,4 +27,27 @@ spacer {
 .myDiv {
   
   display: grid;
+}
+
+.grid-container {
+  display: block;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-item {
+  display: inline-flex;
+  align-items: center;
+  grid-gap: 1px;
+  padding: 15px;
+  padding-top: 15px;
+  font-size: 0.9rem;
+  color: #343a40;
+}
+
+.button {
+  background-color: #343a40;
+}
+
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  background-color: #343a40;
 }
