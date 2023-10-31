@@ -185,7 +185,7 @@ const FilmDetail = () => {
                   <TableCell align="right">Réalisateur : </TableCell>
                   <TableCell align="left">
                     {
-                      film.realisateur.map(r => (
+                      film?.realisateur.map(r => (
                         r.nom + ','
                       ))
                     }
@@ -195,7 +195,7 @@ const FilmDetail = () => {
                   <TableCell align="right">Catégorie : </TableCell>
                   <TableCell align="left">
                     {
-                      film.genre.map((g, index) => (
+                      film?.genre.map((g, index) => (
                         g.name + ','
                       ))
                     }
@@ -213,7 +213,7 @@ const FilmDetail = () => {
                   <TableCell align="right">Acteurs : </TableCell>
                   <TableCell align="left" >
                     {
-                      film.acteur.map((a, index) => (
+                      film?.acteur.map((a, index) => (
                         <img title={a.nom} key={index} className="acteurs" src={a.profilePath} />
                       ))
                     }
@@ -253,6 +253,7 @@ const FilmDetail = () => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         label="Sortie DVD"
+                        format="DD/MM/YYYY"
                         defaultValue={dayjs(film?.dateSortieDvd)}
                         onChange={(newValue) => setDateSortieDvd(newValue)} />
                     </LocalizationProvider>
@@ -342,6 +343,7 @@ const FilmDetail = () => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         label="Ajouté le"
+                        format="DD/MM/YYYY"
                         defaultValue={dayjs(film?.dateInsertion)}
                         onChange={(newValue) => setDateInsertionFilm(newValue)} />
                     </LocalizationProvider>
@@ -355,6 +357,23 @@ const FilmDetail = () => {
                 </TableRow>
               </TableBody>
             </Table>
+{
+  film.critiquePresse && (
+            <Table x={{ minWidth: 650 }} size="smsall" aria-label="a dense table">
+              <TableBody>
+                {
+                  film.critiquePresse.map((cp,index) => (
+                    <TableRow key={index}>
+                  <TableCell align="left" sx={{ minWidth: 100 }}><b> {cp.newsSource}</b></TableCell>
+                  <TableCell align="left" sx={{ minWidth: 60 }}>Note : {cp.rating}</TableCell>
+                  <TableCell align="left">{cp.body}</TableCell>
+                </TableRow>
+                  ))
+                }
+                </TableBody>
+            </Table>
+  )
+}
           </TableContainer>
         </Grid>
       </Grid>
