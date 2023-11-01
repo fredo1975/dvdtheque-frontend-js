@@ -56,7 +56,7 @@ const FilmList = () => {
       .then((response) => {
         setPost(response.data.content);
         setCount(response.data.totalElements);
-        //console.log('response', response);
+        console.log('response', response);
       }).catch(error => console.error(error));
 
   }, [initialized, page, rowsPerPage,newFilter,newSort]);
@@ -87,7 +87,7 @@ const FilmList = () => {
                     (
                       <Typography variant="body2" color="text.secondary">
                     {p.origine} Rippé : &nbsp;<img
-                        src="src/assets/img/ko.png"></img>
+                        src="src/assets/img/ok.png"></img>
                   </Typography>
                     )
                   }
@@ -96,7 +96,7 @@ const FilmList = () => {
                     (
                       <Typography variant="body2" color="text.secondary">
                     {p.origine} Rippé : &nbsp;<img
-                        src="src/assets/img/ok.png"></img>
+                        src="src/assets/img/ko.png"></img>
                   </Typography>
                     )
                   }

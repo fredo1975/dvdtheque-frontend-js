@@ -25,9 +25,9 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 const baseUrl = '/dvdtheque-service/'
-const filmDisplay = baseUrl+'films/byId/'
-const filmUpdateUrl = baseUrl+'films/update/'
-const allCategoriesUrl = baseUrl+'films/genres'
+const filmDisplay = baseUrl + 'films/byId/'
+const filmUpdateUrl = baseUrl + 'films/update/'
+const allCategoriesUrl = baseUrl + 'films/genres'
 const allOrigines = ['DVD', 'EN_SALLE', 'CANAL_PLUS', 'GOOGLE_PLAY', 'TV']
 const zonesDvd = [1, 2, 3]
 const formatsDvd = ['DVD', 'BLUERAY']
@@ -41,7 +41,8 @@ const FilmDetail = () => {
   const [dateRip, setDateRip] = useState('')
   const [vu, setVu] = useState(false);
   const [dateVue, setDateVue] = useState('')
-  const [dateInsertion,setDateInsertion ] = useState('')
+  const [dateInsertion, setDateInsertion] = useState('')
+  const [dateSortieDvd, setDateSortieDvd] = useState('')
   const [allGenres, setAllGenres] = useState(null)
   const [isUpdating, setIsUpdating] = useState(false)
   const [updated, setUpdated] = useState(false)
@@ -58,17 +59,17 @@ const FilmDetail = () => {
     backgroundColor: '#343a40;',
     borderColor: '#0063cc',
     '&:hover': {
-        backgroundColor: '#343a40;',
-        boxShadow: 'none',
+      backgroundColor: '#343a40;',
+      boxShadow: 'none',
     },
     '&:active': {
-        boxShadow: 'none',
-        backgroundColor: '#343a40;',
+      boxShadow: 'none',
+      backgroundColor: '#343a40;',
     },
     '&:focus': {
-        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
     },
-});
+  });
   //console.log(id);
 
   useEffect(() => {
@@ -90,6 +91,7 @@ const FilmDetail = () => {
       setVu(response.data.vu)
       setDateVue(response.data && response.data.dateVue ? dayjs(response.data.dateVue).format('DD/MM/YYYY') : '')
       setDateInsertion(response.data.dateInsertion)
+      setDateSortieDvd(response.data.dateSortieDvd)
       console.log('response.data', response.data);
     }).catch(error => console.error(error));
 
@@ -97,7 +99,7 @@ const FilmDetail = () => {
       timeout: 1500,
     }).then((response) => {
       setAllGenres(response.data);
-      console.log('response', response);
+      //console.log('response', response);
     }).catch(error => console.error(error));
 
   }, [initialized, id]);
@@ -142,18 +144,21 @@ const FilmDetail = () => {
       setDateVue('');
     }
   };
-  const setDateSortieDvd = (newValue) => {
+  const setDateSortieDvdFilm = (newValue) => {
     console.log('setDateSortieDvd', newValue);
+    setDateSortieDvd(newValue);
   }
   const setDateInsertionFilm = (newValue) => {
     console.log('setDateInsertionFilm', newValue);
+    setDateInsertion(newValue)
   }
 
   const updateFilm = () => {
-    console.log('updateFilm',dateVue,dayjs(dateVue, 'DD/MM/YYYY').add(6, 'hour'));
+    console.log('updateFilm', dateInsertion);
     const filmToUpdate = {
       ...film,
-      dvd: {...film.dvd,
+      dvd: {
+        ...film.dvd,
         zone,
         format,
         ripped,
@@ -162,7 +167,8 @@ const FilmDetail = () => {
       origine,
       vu,
       dateVue: dayjs(dateVue, 'DD/MM/YYYY').add(6, 'hour'),
-      dateInsertion,
+      dateInsertion: dayjs(dateInsertion, 'YYYY-MM-DD'),
+      dateSortieDvd: dayjs(dateSortieDvd, 'YYYY-MM-DD'),
     }
     //console.log('updateFilm',filmToUpdate);
     axiosInstance.instance.put(filmUpdateUrl + id, {
@@ -174,14 +180,14 @@ const FilmDetail = () => {
       setZone(response.data?.dvd?.zone);
       setFormat(response.data?.dvd?.format);
       setRipped(response.data?.dvd?.ripped);
-      setDateRip(response.data?.dvd?.dateRip?dayjs(response.data?.dvd?.dateRip).format('DD/MM/YYYY'):'');
+      setDateRip(response.data?.dvd?.dateRip ? dayjs(response.data?.dvd?.dateRip).format('DD/MM/YYYY') : '');
       setVu(response.data.vu)
-      setDateVue(response.data?.dateVue?dayjs(response.data?.dateVue).format('DD/MM/YYYY'):'')
+      setDateVue(response.data?.dateVue ? dayjs(response.data?.dateVue).format('DD/MM/YYYY') : '')
       setDateInsertion(response.data.dateInsertion)
       setIsUpdating(true)
       console.log('response.data', response.data);
     }).catch(error => console.error(error));
-};
+  };
 
   if (!film) return null;
 
@@ -281,7 +287,7 @@ const FilmDetail = () => {
                         label="Sortie DVD"
                         format="DD/MM/YYYY"
                         defaultValue={dayjs(film?.dateSortieDvd)}
-                        onChange={(newValue) => setDateSortieDvd(newValue)} />
+                        onChange={(newValue) => setDateSortieDvdFilm(newValue)} />
                     </LocalizationProvider>
                   </TableCell>
                 </TableRow>
@@ -378,28 +384,28 @@ const FilmDetail = () => {
                 <TableRow>
                   <TableCell align="right"></TableCell>
                   <TableCell align="left">
-                  <BootstrapButton variant="contained" onClick={updateFilm}>Sauver les modifications</BootstrapButton>
+                    <BootstrapButton variant="contained" onClick={updateFilm}>Sauver les modifications</BootstrapButton>
                   </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
-{
-  film.critiquePresse && (
-            <Table x={{ minWidth: 650 }} size="smsall" aria-label="a dense table">
-              <TableBody>
-                {
-                  film.critiquePresse.map((cp,index) => (
-                    <TableRow key={index}>
-                  <TableCell align="left" sx={{ minWidth: 100 }}><b> {cp.newsSource}</b></TableCell>
-                  <TableCell align="left" sx={{ minWidth: 60 }}>Note : {cp.rating}</TableCell>
-                  <TableCell align="left">{cp.body}</TableCell>
-                </TableRow>
-                  ))
-                }
-                </TableBody>
-            </Table>
-  )
-}
+            {
+              film.critiquePresse && (
+                <Table x={{ minWidth: 650 }} size="smsall" aria-label="a dense table">
+                  <TableBody>
+                    {
+                      film.critiquePresse.map((cp, index) => (
+                        <TableRow key={index}>
+                          <TableCell align="left" sx={{ minWidth: 100 }}><b> {cp.newsSource}</b></TableCell>
+                          <TableCell align="left" sx={{ minWidth: 60 }}>Note : {cp.rating}</TableCell>
+                          <TableCell align="left">{cp.body}</TableCell>
+                        </TableRow>
+                      ))
+                    }
+                  </TableBody>
+                </Table>
+              )
+            }
           </TableContainer>
         </Grid>
       </Grid>
