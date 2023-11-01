@@ -85,9 +85,9 @@ const FilmDetail = () => {
       setZone(response.data?.dvd?.zone);
       setFormat(response.data?.dvd?.format);
       setRipped(response.data?.dvd?.ripped);
-      setDateRip(response.data?.dvd?.dateRip);
+      setDateRip(response.data && response.data.dvd && response.data.dvd.dateRip ? dayjs(response.data.dvd.dateRip).format('MM/DD/YYYY') : '');
       setVu(response.data.vu)
-      setDateVue(response.data.dateVue)
+      setDateVue(response.data.dateVue ? dayjs(response.data.dateVue).format('MM/DD/YYYY') : '')
       setDateInsertion(response.data.dateInsertion)
       console.log('response.data', response.data);
     }).catch(error => console.error(error));
@@ -120,22 +120,22 @@ const FilmDetail = () => {
     setFormat(event.target.value)
   };
   const handleRipChange = (event) => {
-    console.log('handleRipChange', event.target.checked);
+    //console.log('handleRipChange', event.target.checked);
     setRipped(event.target.checked)
     if (event.target.checked) {
-      const dateRip = new Date().toLocaleDateString();
-      console.log('handleRipChange', dateRip);
+      const dateRip = dayjs().format('DD/MM/YYYY')
+      //console.log('handleRipChange', dateRip);
       setDateRip(dateRip);
     } else {
       setDateRip('');
     }
   };
   const handleVuChange = (event) => {
-    console.log('handleVuChange', event.target.checked);
+    //console.log('handleVuChange', event.target.checked);
     setVu(event.target.checked)
     if (event.target.checked) {
-      const dateVue = new Date().toLocaleDateString();
-      console.log('handleRipChange', dateVue);
+      const dateVue = dayjs().format('DD/MM/YYYY')
+      //console.log('handleRipChange', dateVue);
       setDateVue(dateVue);
     } else {
       setDateVue('');
@@ -149,16 +149,19 @@ const FilmDetail = () => {
   }
 
   const updateFilm = () => {
+    console.log('updateFilm',dateRip,dateVue);
+    const dateRipformateted = dayjs(dateRip)
+    const dateVueformatted = dayjs(dateVue)
     const filmToUpdate = {
       ...film,
       dvd: {...film.dvd,
         zone,
         format,
         ripped,
-        dateRip,},
+        dateRip: dateRipformateted,},
       origine,
       vu,
-      dateVue,
+      dateVue: dateVueformatted,
       dateInsertion,
     }
     console.log('updateFilm',filmToUpdate);
@@ -171,9 +174,9 @@ const FilmDetail = () => {
       setZone(response.data?.dvd?.zone);
       setFormat(response.data?.dvd?.format);
       setRipped(response.data?.dvd?.ripped);
-      setDateRip(response.data?.dvd?.dateRip);
+      setDateRip(response.data?.dvd?.dateRip?dayjs(response.data?.dvd?.dateRip).format('MM/DD/YYYY'):'');
       setVu(response.data.vu)
-      setDateVue(response.data.dateVue)
+      setDateVue(response.data?.dateVue?dayjs(response.data?.dateVue).format('MM/DD/YYYY'):'')
       setDateInsertion(response.data.dateInsertion)
       setIsUpdating(true)
       console.log('response.data', response.data);
