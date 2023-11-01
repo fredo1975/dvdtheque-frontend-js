@@ -70,15 +70,11 @@ const FilmDetail = () => {
       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
     },
   });
-  //console.log(id);
 
   useEffect(() => {
-    //console.log('FilmDetail initialized',initialized);
     if (!initialized) {
       return;
     }
-    //console.log('axiosInstance',axiosInstance.instance.get(baseURL));
-    //const instance = axios.create;
     axiosInstance.instance.get(filmDisplay + id, {
       timeout: 1500,
     }).then((response) => {
@@ -92,14 +88,12 @@ const FilmDetail = () => {
       setDateVue(response.data && response.data.dateVue ? dayjs(response.data.dateVue).format('DD/MM/YYYY') : '')
       setDateInsertion(response.data.dateInsertion)
       setDateSortieDvd(response.data.dateSortieDvd)
-      console.log('response.data', response.data);
     }).catch(error => console.error(error));
 
     axiosInstance.instance.get(allCategoriesUrl, {
       timeout: 1500,
     }).then((response) => {
       setAllGenres(response.data);
-      //console.log('response', response);
     }).catch(error => console.error(error));
 
   }, [initialized, id]);
@@ -111,66 +105,66 @@ const FilmDetail = () => {
   }, []);
 
   const handleChangeOrigine = (event) => {
-    //console.log('handleChangeOrigine', event.target.value);
     setOrigine(event.target.value)
   };
   const handleChangeZoneDvd = (event) => {
-    //console.log('handleChangeOrigine', event.target.value);
     setZone(event.target.value)
   };
   const handleChangeFormatDvd = (event) => {
-    //console.log('handleChangeOrigine', event.target.value);
     setFormat(event.target.value)
   };
   const handleRipChange = (event) => {
-    //console.log('handleRipChange', event.target.checked);
     setRipped(event.target.checked)
     if (event.target.checked) {
-      //const dateRip = dayjs().format('DD/MM/YYYY')
-      //console.log('handleRipChange', dayjs().format('DD/MM/YYYY'));
       setDateRip(dayjs().format('DD/MM/YYYY'));
     } else {
       setDateRip('');
     }
   };
   const handleVuChange = (event) => {
-    //console.log('handleVuChange', event.target.checked,dayjs().format('DD/MM/YYYY'));
     setVu(event.target.checked)
     if (event.target.checked) {
-      //const dateVue = dayjs().format()
-      //console.log('handleVuChange', dayjs().format('DD/MM/YYYY'));
       setDateVue(dayjs().format('DD/MM/YYYY'));
     } else {
       setDateVue('');
     }
   };
   const setDateSortieDvdFilm = (newValue) => {
-    console.log('setDateSortieDvd', newValue);
     setDateSortieDvd(newValue);
   }
   const setDateInsertionFilm = (newValue) => {
-    console.log('setDateInsertionFilm', newValue);
     setDateInsertion(newValue)
   }
 
   const updateFilm = () => {
-    console.log('updateFilm', dateInsertion);
-    const filmToUpdate = {
-      ...film,
-      dvd: {
-        ...film.dvd,
-        zone,
-        format,
-        ripped,
-        dateRip: dayjs(dateRip, 'DD/MM/YYYY'),
-      },
-      origine,
-      vu,
-      dateVue: dayjs(dateVue, 'DD/MM/YYYY').add(6, 'hour'),
-      dateInsertion: dayjs(dateInsertion, 'YYYY-MM-DD'),
-      dateSortieDvd: dayjs(dateSortieDvd, 'YYYY-MM-DD'),
+    let filmToUpdate;
+    if(origine === 'DVD'){
+      filmToUpdate = {
+        ...film,
+        dvd: {
+          ...film.dvd,
+          zone,
+          format,
+          ripped,
+          dateRip: dayjs(dateRip, 'DD/MM/YYYY'),
+        },
+        origine,
+        vu,
+        dateVue: dayjs(dateVue, 'DD/MM/YYYY').add(6, 'hour'),
+        dateInsertion: dayjs(dateInsertion, 'YYYY-MM-DD'),
+        dateSortieDvd: dayjs(dateSortieDvd, 'YYYY-MM-DD'),
+      }
+    }else{
+      filmToUpdate = {
+        ...film,
+        origine,
+        vu,
+        dateVue: dayjs(dateVue, 'DD/MM/YYYY').add(6, 'hour'),
+        dateInsertion: dayjs(dateInsertion, 'YYYY-MM-DD'),
+        dateSortieDvd: dayjs(dateSortieDvd, 'YYYY-MM-DD'),
+      }
     }
-    //console.log('updateFilm',filmToUpdate);
+    
     axiosInstance.instance.put(filmUpdateUrl + id, {
       ...filmToUpdate,
       timeout: 1500,
@@ -185,7 +179,6 @@ const FilmDetail = () => {
       setDateVue(response.data?.dateVue ? dayjs(response.data?.dateVue).format('DD/MM/YYYY') : '')
       setDateInsertion(response.data.dateInsertion)
       setIsUpdating(true)
-      console.log('response.data', response.data);
     }).catch(error => console.error(error));
   };
 

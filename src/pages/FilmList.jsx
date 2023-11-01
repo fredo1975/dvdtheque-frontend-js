@@ -11,6 +11,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import TablePagination from '@mui/material/TablePagination';
 import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 const paginatedSearch = '/dvdtheque-service/films/paginatedSarch'
 const defaultQuery = 'origine:eq:DVD:AND,'
@@ -24,28 +25,28 @@ const FilmList = () => {
   const [count, setCount] = useState(0);
   const [newFilter, setNewFilter] = useState('');
   const [newSort, setNewSort] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0);
   };
   const changeFilter = (newFilter,newSort) => {
-    //console.log('FilmList changeFilter',newFilter,newSort);
-    setNewFilter(newFilter);
+    setNewFilter(newFilter)
     setNewSort(newSort)
   }
   useEffect(() => {
-    //console.log('FilmList initialized',initialized);
     if (!initialized) {
       return;
     }
-    //console.log('axiosInstance',axiosInstance.instance.get(baseURL));
-    //const instance = axios.create;
+    
+    /*
     axiosInstance.instance.get(paginatedSearch, {
-      timeout: 1500,
+      timeout: 2500,
       params: {
         query: newFilter?newFilter:defaultQuery,
         sort: newSort?newSort:defaultSort,
@@ -54,10 +55,48 @@ const FilmList = () => {
       }
     })
       .then((response) => {
+        console.log(response.data.content)
         setPost(response.data.content);
-        setCount(response.data.totalElements);
-        console.log('response', response);
-      }).catch(error => console.error(error));
+        setCount(response.data.totalElements)
+        setLoading(false)
+        setSuccess(true)
+      }).catch(error => {
+        console.error(error)
+        setLoading(false)
+        setSuccess(false)
+      })*/
+      
+      const fetchData = async () => {
+        console.log('useEffect in fetch',loading)
+        const response = await axiosInstance.instance.get(paginatedSearch, {
+          timeout: 10500,
+          params: {
+            query: newFilter?newFilter:defaultQuery,
+            sort: newSort?newSort:defaultSort,
+            offset: page + 1,
+            limit: rowsPerPage
+          }
+        });
+        
+        // convert the data to json
+        const json = await response;
+        console.log(json,loading)
+        // set state with the result
+        setPost(response.data.content);
+        setCount(response.data.totalElements)
+        setLoading(false)
+        setSuccess(true)
+      }
+      setLoading(true)
+      setSuccess(false)
+      console.log('useEffect before fetch',loading)
+      fetchData()
+      .catch( error => {
+        console.error(error)
+        setLoading(false)
+        setSuccess(false)
+      })
+      console.log('useEffect after fetch',loading)
 
   }, [initialized, page, rowsPerPage,newFilter,newSort]);
 
@@ -66,6 +105,11 @@ const FilmList = () => {
   return (
 
     <Box sx={{ flexGrow: 1 }} >
+      {
+        loading && (
+          <Spinner/>
+        )
+      }
       <FilterBar changeFilter={changeFilter}></FilterBar>
       <Grid container spacing={{ xs: 1, md: 1 }} columns={{ xs: 2, sm: 3, md: 12 }}>
         {post.map((p, index) => (

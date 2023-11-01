@@ -35,11 +35,9 @@ const FilterBar = ({changeFilter}) => {
         }
         axiosInstance.instance.get(allCategoriesUrl, {
             timeout: 1500,
-
         })
             .then((response) => {
                 setAllCategories(response.data);
-                console.log('response', response);
             }).catch(error => console.error(error));
     }, [initialized]);
 
@@ -61,7 +59,6 @@ const FilterBar = ({changeFilter}) => {
     const buildSort = () => {
         let sortBy = ''
         if(sort){
-            //console.log('buildSort sort is not null',sort)
             if(sort === 'titre asc'){
                 sortBy += '+titre,'
               }else if(sort === 'titre desc'){
@@ -81,27 +78,21 @@ const FilterBar = ({changeFilter}) => {
     const buildQuery = () => {
         let query = ''
         if(titre.value){
-            //console.log('filter titre is not null',titre.value)
             query += 'titre:eq:'+titre.value+':AND,'
         }
         if(realisateur.value){
-            //console.log('filter realisateur is not null',realisateur.value)
             query += 'realisateur:eq:'+realisateur.value+':AND,'
         }
         if(acteur.value){
-            //console.log('filter acteur is not null',acteur.value)
             query += 'acteur:eq:'+acteur.value+':AND,'
         }
         if(origine){
-            //console.log('filter origine is not null',origine)
             query += 'origine:eq:'+origine+':AND,'
         }
         if(categorie){
-            //console.log('filter categorie is not null',categorie)
             query += 'genre:eq:'+categorie+':AND,'
         }
         if(dejavu){
-            //console.log('filter dejavu is not null',dejavu)
             if(dejavu === 'vu'){
                 query += 'vu:eq:true:AND,'
             }else{
@@ -109,7 +100,6 @@ const FilterBar = ({changeFilter}) => {
             }
         }
         if(rip){
-            //console.log('filter rip is not null',rip)
             if(dejavu === 'rippé'){
                 query += 'dvd:eq:true:AND,'
             }else{
@@ -121,7 +111,6 @@ const FilterBar = ({changeFilter}) => {
     const filter = () => {
         const query = buildQuery()
         const sort = buildSort()
-        //console.log('filter',query,sort)
         changeFilter(query,sort)
     };
     const resetFilter = () => {
@@ -134,7 +123,6 @@ const FilterBar = ({changeFilter}) => {
         setRip('')
         setSort('')
         const query = '';
-        //console.log('filter',query)
         changeFilter(query)
     };
     const BootstrapButton = styled(Button)({
