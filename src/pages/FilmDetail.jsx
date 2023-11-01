@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useAxios } from "../helpers/axios-hook";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -24,8 +24,10 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
-const filmDisplay = '/dvdtheque-service/films/byId/'
-const allCategoriesUrl = '/dvdtheque-service/films/genres'
+const baseUrl = '/dvdtheque-service/'
+const filmDisplay = baseUrl+'films/byId/'
+const filmUpdateUrl = baseUrl+'films/update/'
+const allCategoriesUrl = baseUrl+'films/genres'
 const allOrigines = ['DVD', 'EN_SALLE', 'CANAL_PLUS', 'GOOGLE_PLAY', 'TV']
 const zonesDvd = [1, 2, 3]
 const formatsDvd = ['DVD', 'BLUERAY']
@@ -41,7 +43,8 @@ const FilmDetail = () => {
   const [dateVue, setDateVue] = useState('');
   const [dateInsertion,setDateInsertion ] = useState('');
   const [allGenres, setAllGenres] = useState(null);
-
+  const [isUpdating, setIsUpdating] = useState(false)
+  const isMounted = useRef(true)
   const { id } = useParams();
 
   const BootstrapButton = styled(Button)({
@@ -96,9 +99,13 @@ const FilmDetail = () => {
       console.log('response', response);
     }).catch(error => console.error(error));
 
-
-
   }, [initialized, id]);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false
+    }
+  }, []);
 
   const handleChangeOrigine = (event) => {
     //console.log('handleChangeOrigine', event.target.value);
@@ -155,6 +162,24 @@ const FilmDetail = () => {
       dateInsertion,
     }
     console.log('updateFilm',filmToUpdate);
+    axiosInstance.instance.put(filmUpdateUrl + id, {
+      ...filmToUpdate,
+      timeout: 1500,
+    }).then((response) => {
+      setFilm(response.data)
+      setOrigine(response.data.origine);
+      setZone(response.data?.dvd?.zone);
+      setFormat(response.data?.dvd?.format);
+      setRipped(response.data?.dvd?.ripped);
+      setDateRip(response.data?.dvd?.dateRip);
+      setVu(response.data.vu)
+      setDateVue(response.data.dateVue)
+      setDateInsertion(response.data.dateInsertion)
+      setIsUpdating(true)
+      console.log('response.data', response.data);
+    }).catch(error => console.error(error));
+  
+    console.log('updateFilm updated');
 };
 
   if (!film) return null;
