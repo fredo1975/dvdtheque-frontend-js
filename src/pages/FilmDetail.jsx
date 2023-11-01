@@ -86,9 +86,9 @@ const FilmDetail = () => {
       setZone(response.data?.dvd?.zone);
       setFormat(response.data?.dvd?.format);
       setRipped(response.data?.dvd?.ripped);
-      setDateRip(response.data && response.data.dvd && response.data.dvd.dateRip ? dayjs(response.data.dvd.dateRip).format('MM/DD/YYYY') : '');
+      setDateRip(response.data && response.data.dvd && response.data.dvd.dateRip ? dayjs(response.data.dvd.dateRip).format('DD/MM/YYYY') : '');
       setVu(response.data.vu)
-      setDateVue(response.data.dateVue ? dayjs(response.data.dateVue).format('MM/DD/YYYY') : '')
+      setDateVue(response.data && response.data.dateVue ? dayjs(response.data.dateVue).format('DD/MM/YYYY') : '')
       setDateInsertion(response.data.dateInsertion)
       console.log('response.data', response.data);
     }).catch(error => console.error(error));
@@ -124,20 +124,20 @@ const FilmDetail = () => {
     //console.log('handleRipChange', event.target.checked);
     setRipped(event.target.checked)
     if (event.target.checked) {
-      const dateRip = dayjs().format('DD/MM/YYYY')
-      //console.log('handleRipChange', dateRip);
-      setDateRip(dateRip);
+      //const dateRip = dayjs().format('DD/MM/YYYY')
+      //console.log('handleRipChange', dayjs().format('DD/MM/YYYY'));
+      setDateRip(dayjs().format('DD/MM/YYYY'));
     } else {
       setDateRip('');
     }
   };
   const handleVuChange = (event) => {
-    //console.log('handleVuChange', event.target.checked);
+    //console.log('handleVuChange', event.target.checked,dayjs().format('DD/MM/YYYY'));
     setVu(event.target.checked)
     if (event.target.checked) {
-      const dateVue = dayjs().format('DD/MM/YYYY')
-      //console.log('handleRipChange', dateVue);
-      setDateVue(dateVue);
+      //const dateVue = dayjs().format()
+      //console.log('handleVuChange', dayjs().format('DD/MM/YYYY'));
+      setDateVue(dayjs().format('DD/MM/YYYY'));
     } else {
       setDateVue('');
     }
@@ -150,22 +150,21 @@ const FilmDetail = () => {
   }
 
   const updateFilm = () => {
-    console.log('updateFilm',dateRip,dateVue);
-    const dateRipformateted = dayjs(dateRip)
-    const dateVueformatted = dayjs(dateVue)
+    console.log('updateFilm',dateVue,dayjs(dateVue, 'DD/MM/YYYY').add(6, 'hour'));
     const filmToUpdate = {
       ...film,
       dvd: {...film.dvd,
         zone,
         format,
         ripped,
-        dateRip: dateRipformateted,},
+        dateRip: dayjs(dateRip, 'DD/MM/YYYY'),
+      },
       origine,
       vu,
-      dateVue: dateVueformatted,
+      dateVue: dayjs(dateVue, 'DD/MM/YYYY').add(6, 'hour'),
       dateInsertion,
     }
-    console.log('updateFilm',filmToUpdate);
+    //console.log('updateFilm',filmToUpdate);
     axiosInstance.instance.put(filmUpdateUrl + id, {
       ...filmToUpdate,
       timeout: 1500,
@@ -175,15 +174,13 @@ const FilmDetail = () => {
       setZone(response.data?.dvd?.zone);
       setFormat(response.data?.dvd?.format);
       setRipped(response.data?.dvd?.ripped);
-      setDateRip(response.data?.dvd?.dateRip?dayjs(response.data?.dvd?.dateRip).format('MM/DD/YYYY'):'');
+      setDateRip(response.data?.dvd?.dateRip?dayjs(response.data?.dvd?.dateRip).format('DD/MM/YYYY'):'');
       setVu(response.data.vu)
-      setDateVue(response.data?.dateVue?dayjs(response.data?.dateVue).format('MM/DD/YYYY'):'')
+      setDateVue(response.data?.dateVue?dayjs(response.data?.dateVue).format('DD/MM/YYYY'):'')
       setDateInsertion(response.data.dateInsertion)
       setIsUpdating(true)
       console.log('response.data', response.data);
     }).catch(error => console.error(error));
-  
-    console.log('updateFilm updated');
 };
 
   if (!film) return null;
