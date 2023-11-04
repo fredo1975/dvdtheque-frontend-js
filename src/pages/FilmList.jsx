@@ -12,6 +12,7 @@ import Box from '@mui/material/Box';
 import TablePagination from '@mui/material/TablePagination';
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import Alert from '@mui/material/Alert';
 
 const paginatedSearch = '/dvdtheque-service/films/paginatedSarch'
 const defaultQuery = 'origine:eq:DVD:AND,'
@@ -25,8 +26,8 @@ const FilmList = () => {
   const [count, setCount] = useState(0);
   const [newFilter, setNewFilter] = useState('');
   const [newSort, setNewSort] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -35,7 +36,7 @@ const FilmList = () => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0);
   };
-  const changeFilter = (newFilter,newSort) => {
+  const changeFilter = (newFilter, newSort) => {
     setNewFilter(newFilter)
     setNewSort(newSort)
   }
@@ -43,85 +44,63 @@ const FilmList = () => {
     if (!initialized) {
       return;
     }
-    
-    /*
-    axiosInstance.instance.get(paginatedSearch, {
-      timeout: 2500,
-      params: {
-        query: newFilter?newFilter:defaultQuery,
-        sort: newSort?newSort:defaultSort,
-        offset: page + 1,
-        limit: rowsPerPage
-      }
-    })
-      .then((response) => {
-        console.log(response.data.content)
-        setPost(response.data.content);
-        setCount(response.data.totalElements)
-        setLoading(false)
-        setSuccess(true)
-      }).catch(error => {
-        console.error(error)
-        setLoading(false)
-        setSuccess(false)
-      })*/
-      
-      const fetchData = async () => {
-        console.log('useEffect in fetch',loading)
-        const response = await axiosInstance.instance.get(paginatedSearch, {
-          timeout: 10500,
+    const fetchData = async () => {
+      setLoading(true)
+      setError(false)
+      try {
+        let response = await axiosInstance.instance.get(paginatedSearch, {
+          timeout: 2500,
           params: {
-            query: newFilter?newFilter:defaultQuery,
-            sort: newSort?newSort:defaultSort,
+            query: newFilter ? newFilter : defaultQuery,
+            sort: newSort ? newSort : defaultSort,
             offset: page + 1,
             limit: rowsPerPage
           }
         });
-        
-        // convert the data to json
-        const json = await response;
-        console.log(json,loading)
-        // set state with the result
+
+        //console.log(response.data.content)
         setPost(response.data.content);
         setCount(response.data.totalElements)
+        setError(false)
         setLoading(false)
-        setSuccess(true)
-      }
-      setLoading(true)
-      setSuccess(false)
-      console.log('useEffect before fetch',loading)
-      fetchData()
-      .catch( error => {
+
+      } catch (error) {
         console.error(error)
+        setError(true)
         setLoading(false)
-        setSuccess(false)
-      })
-      console.log('useEffect after fetch',loading)
+      }
+    }
+    fetchData()
 
-  }, [initialized, page, rowsPerPage,newFilter,newSort]);
+  }, [initialized, page, rowsPerPage, newFilter, newSort]);
 
-  if (!post) return null;
+  //if (!post) return null;
 
   return (
 
     <Box sx={{ flexGrow: 1 }} >
       {
         loading && (
-          <Spinner/>
+          <Spinner />
+        )
+      }
+      {
+        !loading && error && (
+          <Alert severity="error">Une erreur est survenue</Alert>
         )
       }
       <FilterBar changeFilter={changeFilter}></FilterBar>
       <Grid container spacing={{ xs: 1, md: 1 }} columns={{ xs: 2, sm: 3, md: 12 }}>
-        {post.map((p, index) => (
+        {post && post.map((p, index) => (
           <Grid key={index} className="myDiv">
             <Card key={index} sx={{ maxWidth: 200 }}>
-              <CardActionArea component={Link} to={'/film-detail/'+p.id}>
+              <CardActionArea component={Link} to={'/film-detail/' + p.id}>
                 <CardMedia
                   component="img"
                   height="305"
                   width="200"
                   image={p.posterPath}
-                  title={p.titre}/>
+                  title={p.titre} />
                 <CardContent>
                   <Typography variant="body2" color="text.secondary">
                     Durée : {p.runtime}
@@ -130,42 +109,42 @@ const FilmList = () => {
                     p.dvd && p.origine === 'DVD' && p.dvd.ripped &&
                     (
                       <Typography variant="body2" color="text.secondary">
-                    {p.origine} Rippé : &nbsp;<img
-                        src="src/assets/img/ok.png"></img>
-                  </Typography>
+                        {p.origine} Rippé : &nbsp;<img
+                          src="src/assets/img/ok.png"></img>
+                      </Typography>
                     )
                   }
                   {
                     p.dvd && p.origine === 'DVD' && !p.dvd.ripped &&
                     (
                       <Typography variant="body2" color="text.secondary">
-                    {p.origine} Rippé : &nbsp;<img
-                        src="src/assets/img/ko.png"></img>
-                  </Typography>
+                        {p.origine} Rippé : &nbsp;<img
+                          src="src/assets/img/ko.png"></img>
+                      </Typography>
                     )
                   }
                   {
                     p.origine != 'DVD' &&
                     (
                       <Typography variant="body2" color="text.secondary">
-                    Origine : &nbsp;{p.origine}
-                  </Typography>
+                        Origine : &nbsp;{p.origine}
+                      </Typography>
                     )
                   }
                   {
                     p.vu &&
                     (
                       <Typography variant="body2" color="text.secondary">
-                    Vu : &nbsp; <img src="src/assets/img/ok.png"/>
-                  </Typography>
+                        Vu : &nbsp; <img src="src/assets/img/ok.png" />
+                      </Typography>
                     )
                   }
                   {
                     !p.vu &&
                     (
                       <Typography variant="body2" color="text.secondary">
-                    Vu : &nbsp; <img src="src/assets/img/ko.png"/>
-                  </Typography>
+                        Vu : &nbsp; <img src="src/assets/img/ko.png" />
+                      </Typography>
                     )
                   }
                 </CardContent>

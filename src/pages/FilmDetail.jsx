@@ -23,6 +23,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import Spinner from "../components/Spinner";
+import Alert from '@mui/material/Alert';
 
 const baseUrl = '/dvdtheque-service/'
 const filmDisplay = baseUrl + 'films/byId/'
@@ -44,8 +46,9 @@ const FilmDetail = () => {
   const [dateInsertion, setDateInsertion] = useState('')
   const [dateSortieDvd, setDateSortieDvd] = useState('')
   const [allGenres, setAllGenres] = useState(null)
-  const [isUpdating, setIsUpdating] = useState(false)
-  const [updated, setUpdated] = useState(false)
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [updated, setUpdated] = useState(false);
   const isMounted = useRef(true)
   const { id } = useParams();
 
@@ -75,26 +78,38 @@ const FilmDetail = () => {
     if (!initialized) {
       return;
     }
-    axiosInstance.instance.get(filmDisplay + id, {
-      timeout: 1500,
-    }).then((response) => {
-      setFilm(response.data)
-      setOrigine(response.data.origine);
-      setZone(response.data?.dvd?.zone);
-      setFormat(response.data?.dvd?.format);
-      setRipped(response.data?.dvd?.ripped);
-      setDateRip(response.data && response.data.dvd && response.data.dvd.dateRip ? dayjs(response.data.dvd.dateRip).format('DD/MM/YYYY') : '');
-      setVu(response.data.vu)
-      setDateVue(response.data && response.data.dateVue ? dayjs(response.data.dateVue).format('DD/MM/YYYY') : '')
-      setDateInsertion(response.data.dateInsertion)
-      setDateSortieDvd(response.data.dateSortieDvd)
-    }).catch(error => console.error(error));
+    
+    const fetchData = async () => {
+      setLoading(true)
+      setError(false)
+      try {
+        let response1 = await  axiosInstance.instance.get(filmDisplay + id, {
+          timeout: 5500,
+        });
+        setFilm(response1.data)
+        setOrigine(response1.data.origine);
+        setZone(response1.data?.dvd?.zone);
+        setFormat(response1.data?.dvd?.format);
+        setRipped(response1.data?.dvd?.ripped);
+        setDateRip(response1.data && response1.data.dvd && response1.data.dvd.dateRip ? dayjs(response1.data.dvd.dateRip).format('DD/MM/YYYY') : '');
+        setVu(response1.data.vu)
+        setDateVue(response1.data && response1.data.dateVue ? dayjs(response1.data.dateVue).format('DD/MM/YYYY') : '')
+        setDateInsertion(response1.data.dateInsertion)
+        setDateSortieDvd(response1.data.dateSortieDvd)
 
-    axiosInstance.instance.get(allCategoriesUrl, {
-      timeout: 1500,
-    }).then((response) => {
-      setAllGenres(response.data);
-    }).catch(error => console.error(error));
+        let response2 = axiosInstance.instance.get(allCategoriesUrl, {
+          timeout: 5500,
+        });
+        setAllGenres(response2.data);
+        setError(false)
+        setLoading(false)
+      } catch (error) {
+        console.error(error)
+        setError(true)
+        setLoading(false)
+      }
+    }
+    fetchData()
 
   }, [initialized, id]);
 
@@ -178,14 +193,23 @@ const FilmDetail = () => {
       setVu(response.data.vu)
       setDateVue(response.data?.dateVue ? dayjs(response.data?.dateVue).format('DD/MM/YYYY') : '')
       setDateInsertion(response.data.dateInsertion)
-      setIsUpdating(true)
+      setUpdated(true)
     }).catch(error => console.error(error));
   };
 
-  if (!film) return null;
-
   return (
     <Box sx={{ flexGrow: 1 }} >
+      {
+        loading && (
+          <Spinner />
+        )
+      }
+      {
+        !loading && error && (
+          <Alert severity="error">Une erreur est survenue</Alert>
+        )
+      }
+      { film && (
       <Grid container spacing={1}>
         <Grid item xs={3}>
           <img src={film.posterPath} />
@@ -194,6 +218,13 @@ const FilmDetail = () => {
           <TableContainer component={Paper}>
             <Table >
               <TableBody>
+                {
+                  updated && (
+                  <TableRow>
+                  <TableCell align="center" sx={{ minWidth: 200 }} colSpan={2}><Alert severity="success">film modifié</Alert></TableCell>
+                </TableRow>
+                  )
+                }
                 <TableRow >
                   <TableCell align="right" sx={{ minWidth: 100 }}>Titre : </TableCell>
                   <TableCell align="left">{film.titre}</TableCell>
@@ -380,6 +411,13 @@ const FilmDetail = () => {
                     <BootstrapButton variant="contained" onClick={updateFilm}>Sauver les modifications</BootstrapButton>
                   </TableCell>
                 </TableRow>
+                {
+                  updated && (
+                  <TableRow>
+                  <TableCell align="center" sx={{ minWidth: 200 }} colSpan={2}><Alert severity="success">film modifié</Alert></TableCell>
+                </TableRow>
+                  )
+                }
               </TableBody>
             </Table>
             {
@@ -402,6 +440,7 @@ const FilmDetail = () => {
           </TableContainer>
         </Grid>
       </Grid>
+      )}
     </Box>
   );
 };
