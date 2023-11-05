@@ -173,7 +173,11 @@ const FilmAdd = () => {
                               <BootstrapButton variant="contained" onClick={() => addFilm(f.tmdbId)}>Ajouter</BootstrapButton>
                             )
                           }
-                        
+                        {
+                            f.alreadyInDvdtheque && (
+                              <BootstrapButton variant="contained" onClick={() => addFilm(f.tmdbId)}>Ajouter</BootstrapButton>
+                            )
+                          }
                         </TableCell>
                         </TableRow>
                       ))
