@@ -96,7 +96,7 @@ const FilmDetail = () => {
         setDateVue(response1.data && response1.data.dateVue ? dayjs(response1.data.dateVue).format('DD/MM/YYYY') : '')
         setDateInsertion(response1.data.dateInsertion)
         setDateSortieDvd(response1.data.dateSortieDvd)
-
+        console.log(response1.data)
         let response2 = axiosInstance.instance.get(allCategoriesUrl, {
           timeout: 5500,
         });

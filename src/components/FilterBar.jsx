@@ -9,19 +9,12 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import { useAxios } from "../helpers/axios-hook";
+import * as constants from "../helpers/constants";
 
 const allCategoriesUrl = '/dvdtheque-service/films/genres'
-const rippedOptions = ['rippé', 'non rippé']
-const vuOptions = ['vu', 'non vu']
-const sortByOptions = ['titre asc', 'titre desc', 'realisateur asc', 'realisateur desc', 'acteur asc', 'acteur desc', 'annee asc', 'annee desc']
-const DVD = 'DVD'
-const EN_SALLE = 'EN_SALLE'
-const CANAL_PLUS = 'CANAL_PLUS'
-const GOOGLE_PLAY = 'GOOGLE_PLAY'
-const TV = 'TV'
 
 const FilterBar = ({changeFilter}) => {
-    const [origine, setOrigine] = useState(DVD);
+    const [origine, setOrigine] = useState(constants.DVD);
     const [categorie, setCategorie] = useState('');
     const [dejavu, setDejavu] = useState('');
     const [rip, setRip] = useState('');
@@ -147,7 +140,6 @@ const FilterBar = ({changeFilter}) => {
         },
     });
 
-
     return (
         <Box sx={{ flexGrow: 1 }} >
             <div className="grid-container" >
@@ -169,11 +161,11 @@ const FilterBar = ({changeFilter}) => {
                             value={origine}
                             label="Origine"
                             onChange={handleChangeOrigine}>
-                            <MenuItem value={DVD}>Dvd</MenuItem>
-                            <MenuItem value={EN_SALLE}>En salle</MenuItem>
-                            <MenuItem value={CANAL_PLUS}>Canal +</MenuItem>
-                            <MenuItem value={GOOGLE_PLAY}>Google play</MenuItem>
-                            <MenuItem value={TV}>Tv</MenuItem>
+                            <MenuItem value={constants.DVD}>Dvd</MenuItem>
+                            <MenuItem value={constants.EN_SALLE}>En salle</MenuItem>
+                            <MenuItem value={constants.CANAL_PLUS}>Canal +</MenuItem>
+                            <MenuItem value={constants.GOOGLE_PLAY}>Google play</MenuItem>
+                            <MenuItem value={constants.TV}>Tv</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
@@ -201,7 +193,7 @@ const FilterBar = ({changeFilter}) => {
                             value={dejavu}
                             label="Déjà Vu"
                             onChange={handleChangeDejavu}>
-                             {vuOptions && vuOptions.map((p, index) => (
+                             {constants.vuOptions && constants.vuOptions.map((p, index) => (
                                 <MenuItem key={p} value={p}>{p}</MenuItem>
                             ))}
                         </Select>
@@ -216,7 +208,7 @@ const FilterBar = ({changeFilter}) => {
                             value={rip}
                             label="Rippé"
                             onChange={handleChangeRip}>
-                            {rippedOptions && rippedOptions.map((p, index) => (
+                            {constants.rippedOptions && constants.rippedOptions.map((p, index) => (
                                 <MenuItem key={p} value={p}>{p}</MenuItem>
                             ))}
                         </Select>
@@ -232,7 +224,7 @@ const FilterBar = ({changeFilter}) => {
                             label="Trié par"
                             onChange={handleChangeSort}
                         >
-                            {sortByOptions && sortByOptions.map((p, index) => (
+                            {constants.sortByOptions && constants.sortByOptions.map((p, index) => (
                                 <MenuItem key={p} value={p}>{p}</MenuItem>
                             ))}
                         </Select>

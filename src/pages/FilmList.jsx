@@ -7,7 +7,7 @@ import { CardActionArea } from '@mui/material';
 import { useAxios } from "../helpers/axios-hook";
 import FilterBar from "../components/FilterBar";
 import { useEffect, useState } from 'react';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import TablePagination from '@mui/material/TablePagination';
 import { Link } from "react-router-dom";
@@ -57,13 +57,11 @@ const FilmList = () => {
             limit: rowsPerPage
           }
         });
-
         //console.log(response.data.content)
         setPost(response.data.content);
         setCount(response.data.totalElements)
         setError(false)
         setLoading(false)
-
       } catch (error) {
         console.error(error)
         setError(true)
@@ -90,10 +88,10 @@ const FilmList = () => {
         )
       }
       <FilterBar changeFilter={changeFilter}></FilterBar>
-      <Grid container spacing={{ xs: 1, md: 1 }} columns={{ xs: 2, sm: 3, md: 12 }}>
+      <Grid container spacing={{ xs: 1, md: 2}} columns={{ xs: 2, sm: 3, md: 12 }}>
         {post && post.map((p, index) => (
-          <Grid key={index} className="myDiv">
-            <Card key={index} sx={{ maxWidth: 200 }}>
+          <Grid item md={1} key={index}>
+            <Card md={1} key={index}>
               <CardActionArea component={Link} to={'/film-detail/' + p.id}>
                 <CardMedia
                   component="img"

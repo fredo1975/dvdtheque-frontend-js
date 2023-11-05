@@ -24,11 +24,6 @@ spacer {
   background-color: #343a40 !important;
 }
 
-.myDiv {
-  
-  display: grid;
-}
-
 .grid-container {
   display: block;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
