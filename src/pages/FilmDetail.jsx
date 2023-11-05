@@ -235,7 +235,7 @@ const FilmDetail = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell align="right">Date de sortie : </TableCell>
-                  <TableCell align="left">{film.dateSortie}</TableCell>
+                  <TableCell align="left">{dayjs(film.dateSortie).format('DD/MM/YYYY')}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell align="right">Réalisateur : </TableCell>

@@ -20,6 +20,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
+import NameFormatter from "../components/NameFormatter";
 
 const allTmdbFilmsByTitreUrl = '/dvdtheque-service/films/tmdb/byTitre/';
 const saveFilmUrl = '/dvdtheque-service/films/save/'
@@ -151,34 +152,28 @@ const FilmAdd = () => {
                       films.map((f, index) => (
                         <TableRow key={index}>
                           <TableCell align="left" sx={{ minWidth: 100 }}><img src={f.posterPath} alt="" width="200" /></TableCell>
-                          <TableCell align="left" sx={{ minWidth: 100 }}><b> {f.titre}</b></TableCell>
-                          <TableCell align="left" sx={{ minWidth: 100 }}><b> {f.titreO}</b></TableCell>
+                          <TableCell align="left" sx={{ minWidth: 100 }}><b>{f.titre}</b></TableCell>
+                          <TableCell align="left" sx={{ minWidth: 100 }}><b>{f.titreO}</b></TableCell>
                           <TableCell align="left" sx={{ minWidth: 100 }}>
-                          {
-                            f?.acteur.map((a, index) => (
-                              a.nom + ','
-                            ))
-                          }
+                            <NameFormatter map={f?.acteur}></NameFormatter>
                         </TableCell>
                         <TableCell align="left" sx={{ minWidth: 200 }}>
-                          {
-                            f?.realisateur.map(r => (
-                              r.nom + ','
-                            ))
-                          }
+                          <NameFormatter map={f?.realisateur}></NameFormatter>
                         </TableCell>
+                        <TableCell align="left" sx={{ minWidth: 50 }}>{f.annee}</TableCell>
                         <TableCell align="left" sx={{ minWidth: 50 }}>
                           {
                             !f.alreadyInDvdtheque && (
                               <BootstrapButton variant="contained" onClick={() => addFilm(f.tmdbId)}>Ajouter</BootstrapButton>
                             )
                           }
-                        {
+                          {
                             f.alreadyInDvdtheque && (
-                              <BootstrapButton variant="contained" onClick={() => addFilm(f.tmdbId)}>Ajouter</BootstrapButton>
+                              <div>Film déjà enregistré</div>
                             )
                           }
                         </TableCell>
+                        
                         </TableRow>
                       ))
                     }

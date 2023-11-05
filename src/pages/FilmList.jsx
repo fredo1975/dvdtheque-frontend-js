@@ -13,10 +13,8 @@ import TablePagination from '@mui/material/TablePagination';
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
+import * as constants from "../helpers/constants";
 
-const paginatedSearch = '/dvdtheque-service/films/paginatedSarch'
-const defaultQuery = 'origine:eq:DVD:AND,'
-const defaultSort = '-dateInsertion,+titre'
 
 const FilmList = () => {
   const [post, setPost] = useState(null);
@@ -48,11 +46,11 @@ const FilmList = () => {
       setLoading(true)
       setError(false)
       try {
-        let response = await axiosInstance.instance.get(paginatedSearch, {
+        let response = await axiosInstance.instance.get(constants.paginatedSearch, {
           timeout: 2500,
           params: {
-            query: newFilter ? newFilter : defaultQuery,
-            sort: newSort ? newSort : defaultSort,
+            query: newFilter ? newFilter : constants.defaultQuery,
+            sort: newSort ? newSort : constants.defaultSort,
             offset: page + 1,
             limit: rowsPerPage
           }
