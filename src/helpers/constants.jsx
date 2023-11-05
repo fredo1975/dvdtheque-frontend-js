@@ -11,18 +11,3 @@ export const TV = 'TV'
 export const paginatedSearch = '/dvdtheque-service/films/paginatedSarch'
 export const defaultQuery = 'origine:eq:DVD:AND,'
 export const defaultSort = '-dateInsertion,+titre'
-
-export const formatName = (nom) => {
-    //console.log('formatName',nom)
-    return nom
-}
-
-export const formatMapName = (mapName) => {
-    console.log('formatMapName',mapName)
-    let res
-    mapName.map((a, index) => (
-        res += formatName(a.nom + ',')
-    ))
-    console.log('formatMapName',res)
-    return res
-}
