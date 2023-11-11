@@ -41,7 +41,7 @@ pipeline {
 			steps {
 				script {
 					sh "npm -v"
-					sh "npm run dev"
+					sh "npm build:dev"
 				}
 			}
 		}
@@ -53,7 +53,8 @@ pipeline {
 				script {
 					sh "npm -v"
 					ARTIFACT_VERSION = getArtifactVersion(GIT_BRANCH_NAME,GIT_REVISION)
-					sh "npm run production"
+					sh "npm install"
+					sh "npm run build"
 				}
 			}
 		}
