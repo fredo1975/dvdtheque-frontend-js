@@ -66,7 +66,7 @@ pipeline {
 			steps {
 				script {
 					sh "ssh jenkins@$DEV_SERVER_IP rm -rf /var/www/$HOST/*"
-					sh "scp -r dist/$HOST_ORIGIN/* jenkins@$DEV_SERVER_IP:/var/www/$HOST"
+					sh "scp -r dist/* jenkins@$DEV_SERVER_IP:/var/www/$HOST"
 				}
 			}
 		}
