@@ -8,6 +8,6 @@ export const CANAL_PLUS = 'CANAL_PLUS'
 export const GOOGLE_PLAY = 'GOOGLE_PLAY'
 export const TV = 'TV'
 
-export const paginatedSearch = '/dvdtheque-service/films/paginatedSarch'
+export const paginatedSearch = 'films/paginatedSarch'
 export const defaultQuery = 'origine:eq:DVD:AND,'
 export const defaultSort = '-dateInsertion,+titre'

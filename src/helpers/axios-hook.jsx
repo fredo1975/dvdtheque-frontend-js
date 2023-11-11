@@ -3,8 +3,6 @@ import { useKeycloak } from "@react-keycloak/web";
 import { useAuth } from "../helpers/auth-hook";
 import { useCallback, useEffect, useState } from 'react';
 
-const baseURL = 'http://' + import.meta.env.VITE_BACKEND_URL
-
 export const useAxios = () => {
     const { token, isAuthenticated, meta } = useAuth();
     const [initialized, setInitialized] = useState(false);
@@ -17,7 +15,7 @@ export const useAxios = () => {
             return;
         }
         const instance = axios.create({
-            baseURL: baseURL,
+            baseURL: import.meta.env.VITE_BACKEND_URL,
             timeout: 1000,
             headers: {
                 Authorization: isAuthenticated ? `Bearer ${meta.keycloak.token}` : undefined,

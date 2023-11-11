@@ -16,6 +16,8 @@ import Alert from '@mui/material/Alert';
 import * as constants from "../helpers/constants";
 
 
+const paginatedSearchUrl = import.meta.env.VITE_BACKEND_URL + constants.paginatedSearch
+
 const FilmList = () => {
   const [post, setPost] = useState(null);
   const { axiosInstance, initialized } = useAxios(null);
@@ -46,7 +48,7 @@ const FilmList = () => {
       setLoading(true)
       setError(false)
       try {
-        let response = await axiosInstance.instance.get(constants.paginatedSearch, {
+        let response = await axiosInstance.instance.get(paginatedSearchUrl, {
           timeout: 2500,
           params: {
             query: newFilter ? newFilter : constants.defaultQuery,

@@ -26,10 +26,10 @@ import { styled } from '@mui/material/styles';
 import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
 
-const baseUrl = '/dvdtheque-service/'
-const filmDisplay = baseUrl + 'films/byId/'
-const filmUpdateUrl = baseUrl + 'films/update/'
-const allCategoriesUrl = baseUrl + 'films/genres'
+
+const filmDisplay = import.meta.env.VITE_BACKEND_URL + 'films/byId/'
+const filmUpdateUrl = import.meta.env.VITE_BACKEND_URL + 'films/update/'
+const allCategoriesUrl = import.meta.env.VITE_BACKEND_URL + 'films/genres'
 const allOrigines = ['DVD', 'EN_SALLE', 'CANAL_PLUS', 'GOOGLE_PLAY', 'TV']
 const zonesDvd = [1, 2, 3]
 const formatsDvd = ['DVD', 'BLUERAY']

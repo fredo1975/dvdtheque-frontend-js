@@ -22,8 +22,8 @@ import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import NameFormatter from "../components/NameFormatter";
 
-const allTmdbFilmsByTitreUrl = '/dvdtheque-service/films/tmdb/byTitre/';
-const saveFilmUrl = '/dvdtheque-service/films/save/'
+const allTmdbFilmsByTitreUrl = import.meta.env.VITE_BACKEND_URL + 'films/tmdb/byTitre/';
+const saveFilmUrl = import.meta.env.VITE_BACKEND_URL + 'films/save/'
 
 const FilmAdd = () => {
   const { axiosInstance, initialized } = useAxios(null);
