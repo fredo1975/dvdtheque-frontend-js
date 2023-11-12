@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 
-const removeFilmUrl = import.meta.env.VITE_BACKEND_URL + 'films/remove/'
+const removeFilmUrl = import.meta.env.VITE_BACKEND_URL + '/films/remove/'
 
 const Admin = () => {
   const [post, setPost] = useState(null);
