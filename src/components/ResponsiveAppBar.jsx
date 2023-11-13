@@ -31,8 +31,8 @@ const ResponsiveAppBar = () =>  {
     const { keycloak, initialized } = useKeycloak();
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+        <Box sx={{ flexGrow: 1 }} >
+            <AppBar position="static" color='primary' className='dark'>
                 <Toolbar>
                     <Typography
                         variant="h6"
