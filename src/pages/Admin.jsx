@@ -105,7 +105,7 @@ const Admin = () => {
       axiosInstance.instance.put(removeFilmUrl + id,null, {
         timeout: 1500,
       }).then((response) => {
-        console.log(response)
+        //console.log(response)
         setRemoved(true)
         setError(false)
         setLoading(false)

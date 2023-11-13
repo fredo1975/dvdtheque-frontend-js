@@ -15,7 +15,6 @@ import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
 import * as constants from "../helpers/constants";
 
-
 const paginatedSearchUrl = constants.paginatedSearch
 
 const FilmList = () => {

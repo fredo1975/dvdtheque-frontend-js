@@ -26,7 +26,6 @@ import { styled } from '@mui/material/styles';
 import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
 
-
 const filmDisplay = '/films/byId/'
 const filmUpdateUrl = '/films/update/'
 const allCategoriesUrl = '/films/genres'
@@ -96,7 +95,7 @@ const FilmDetail = () => {
         setDateVue(response1.data && response1.data.dateVue ? dayjs(response1.data.dateVue).format('DD/MM/YYYY') : '')
         setDateInsertion(response1.data.dateInsertion)
         setDateSortieDvd(response1.data.dateSortieDvd)
-        console.log(response1.data)
+        //console.log(response1.data)
         let response2 = axiosInstance.instance.get(allCategoriesUrl, {
           timeout: 5500,
         });
