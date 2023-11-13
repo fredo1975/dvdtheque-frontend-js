@@ -48,7 +48,7 @@ const ResponsiveAppBar = () =>  {
                             color: 'inherit',
                             textDecoration: 'none',
                         }}>
-                        <img src="src/assets/img/cd_dvd.png" alt="DVDTHEQUE" width="30" />
+                        <img src="assets/img/cd_dvd.png" alt="DVDTHEQUE" width="30" />
                     </Typography>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>

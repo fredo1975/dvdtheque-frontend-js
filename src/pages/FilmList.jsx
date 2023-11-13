@@ -108,7 +108,7 @@ const FilmList = () => {
                     (
                       <Typography variant="body2" color="text.secondary">
                         {p.origine} Rippé : &nbsp;<img
-                          src="src/assets/img/ok.png"></img>
+                          src="assets/img/ok.png"></img>
                       </Typography>
                     )
                   }
@@ -117,7 +117,7 @@ const FilmList = () => {
                     (
                       <Typography variant="body2" color="text.secondary">
                         {p.origine} Rippé : &nbsp;<img
-                          src="src/assets/img/ko.png"></img>
+                          src="assets/img/ko.png"></img>
                       </Typography>
                     )
                   }
@@ -133,7 +133,7 @@ const FilmList = () => {
                     p.vu &&
                     (
                       <Typography variant="body2" color="text.secondary">
-                        Vu : &nbsp; <img src="src/assets/img/ok.png" />
+                        Vu : &nbsp; <img src="assets/img/ok.png" />
                       </Typography>
                     )
                   }
@@ -141,7 +141,7 @@ const FilmList = () => {
                     !p.vu &&
                     (
                       <Typography variant="body2" color="text.secondary">
-                        Vu : &nbsp; <img src="src/assets/img/ko.png" />
+                        Vu : &nbsp; <img src="assets/img/ko.png" />
                       </Typography>
                     )
                   }
