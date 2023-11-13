@@ -21,7 +21,7 @@ const FilmList = () => {
   const [post, setPost] = useState(null);
   const { axiosInstance, initialized } = useAxios(null);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const [count, setCount] = useState(0);
   const [newFilter, setNewFilter] = useState('');
   const [newSort, setNewSort] = useState('');
@@ -32,7 +32,7 @@ const FilmList = () => {
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
+    setRowsPerPage(parseInt(event.target.value, 50))
     setPage(0);
   };
   const changeFilter = (newFilter, newSort) => {
