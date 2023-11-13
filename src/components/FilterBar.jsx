@@ -114,8 +114,8 @@ const FilterBar = ({changeFilter}) => {
         setCategorie('')
         setDejavu('')
         setRip('')
-        setSort('')
-        const query = '';
+        //setSort('')
+        const query = 'allCategory';
         changeFilter(query)
     };
     const BootstrapButton = styled(Button)({

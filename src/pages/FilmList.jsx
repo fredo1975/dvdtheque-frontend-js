@@ -50,7 +50,7 @@ const FilmList = () => {
         let response = await axiosInstance.instance.get(paginatedSearchUrl, {
           timeout: 2500,
           params: {
-            query: newFilter ? newFilter : constants.defaultQuery,
+            query: newFilter ? newFilter === 'allCategory' ? '' : newFilter : constants.defaultQuery,
             sort: newSort ? newSort : constants.defaultSort,
             offset: page + 1,
             limit: rowsPerPage
@@ -87,7 +87,7 @@ const FilmList = () => {
         )
       }
       <FilterBar changeFilter={changeFilter}></FilterBar>
-      <Grid container spacing={{ xs: 1, md: 2}} columns={{ xs: 2, sm: 3, md: 12 }}>
+      <Grid container spacing={{ xs: 1, md: 2}} columns={{ xs: 2, sm: 3, md: 11 }}>
         {post && post.map((p, index) => (
           <Grid item md={1} key={index}>
             <Card md={1} key={index}>
