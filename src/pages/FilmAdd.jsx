@@ -48,15 +48,20 @@ const FilmAdd = () => {
       alert('il faut une origine au film pour l\'ajouter');
       return;
     }
-    
+    setLoading(true)
+    setError(false)
     //console.log(tmdbId,origine)
     const config = { timeout: 3000,headers: {'Content-Type': 'text/plain'} }
     axiosInstance.instance.put(saveFilmUrl+tmdbId, origine,config)
     .then((response) => {
-      console.log(response)
+      //console.log(response)
+      setError(false)
+      setLoading(false)
       navigate('/film-detail/'+response.data.id, { replace: true });
     }).catch(error => {
       console.error(error)
+      setError(true)
+      setLoading(false)
     });
   }
   
@@ -66,7 +71,7 @@ const FilmAdd = () => {
     axiosInstance.instance.get(allTmdbFilmsByTitreUrl  + titre+ '/' + 1, {
       timeout: 15500,
     }).then((response) => {
-      console.log(response)
+      //console.log(response)
       setFilms(response.data)
       setError(false)
       setLoading(false)

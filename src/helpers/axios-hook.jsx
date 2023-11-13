@@ -16,7 +16,7 @@ export const useAxios = () => {
         }
         const instance = axios.create({
             baseURL: import.meta.env.VITE_BACKEND_URL,
-            timeout: 1000,
+            timeout: 2000,
             headers: {
                 Authorization: isAuthenticated ? `Bearer ${meta.keycloak.token}` : undefined,
             },
