@@ -50,7 +50,7 @@ const FilmAdd = () => {
     }
     
     //console.log(tmdbId,origine)
-    const config = { headers: {'Content-Type': 'text/plain', timeout: 2500} }
+    const config = { timeout: 3000,headers: {'Content-Type': 'text/plain'} }
     axiosInstance.instance.put(saveFilmUrl+tmdbId, origine,config)
     .then((response) => {
       console.log(response)
