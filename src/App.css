@@ -1,42 +1,52 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.nav-link {
+  color: white;
+  text-decoration:none;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bg-dark {
+  background-color: #343a40 !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+spacer {
+  flex: 1 1 auto;
+}
+.mat-sidenav-content{
+  display: table;
 }
 
-.card {
-  padding: 2em;
+
+.css-hip9hq-MuiPaper-root-MuiAppBar-root {
+  background-color: #343a40 !important;
 }
 
-.read-the-docs {
-  color: #888;
+.grid-container {
+  display: block;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-item {
+  display: inline-flex;
+  align-items: center;
+  grid-gap: 1px;
+  padding: 15px;
+  padding-top: 15px;
+  font-size: 0.9rem;
+  color: #343a40;
+}
+
+.button {
+  background-color: #343a40;
+}
+
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  background-color: #343a40;
+}
+.acteurs {
+  height: 351px;
+  width: 231px;
 }
