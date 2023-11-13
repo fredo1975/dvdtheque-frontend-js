@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles';
 import { useAxios } from "../helpers/axios-hook";
 import * as constants from "../helpers/constants";
 
-const allCategoriesUrl = import.meta.env.VITE_BACKEND_URL + '/films/genres'
+const allCategoriesUrl = '/films/genres'
 
 const FilterBar = ({changeFilter}) => {
     const [origine, setOrigine] = useState(constants.DVD);
