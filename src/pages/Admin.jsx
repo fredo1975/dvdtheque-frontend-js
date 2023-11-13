@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 
-const removeFilmUrl = import.meta.env.VITE_BACKEND_URL + '/films/remove/'
+const removeFilmUrl = '/films/remove/'
 
 const Admin = () => {
   const [post, setPost] = useState(null);
@@ -51,7 +51,7 @@ const Admin = () => {
       setLoading(true)
       setError(false)
       try {
-        let response = await axiosInstance.instance.get(import.meta.env.VITE_BACKEND_URL + constants.paginatedSearch, {
+        let response = await axiosInstance.instance.get(constants.paginatedSearch, {
           timeout: 2500,
           params: {
             query: newFilter ? newFilter : constants.defaultQuery,

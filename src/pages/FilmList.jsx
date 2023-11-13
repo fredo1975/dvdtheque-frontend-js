@@ -16,7 +16,7 @@ import Alert from '@mui/material/Alert';
 import * as constants from "../helpers/constants";
 
 
-const paginatedSearchUrl = import.meta.env.VITE_BACKEND_URL + constants.paginatedSearch
+const paginatedSearchUrl = constants.paginatedSearch
 
 const FilmList = () => {
   const [post, setPost] = useState(null);
