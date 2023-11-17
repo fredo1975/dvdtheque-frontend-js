@@ -78,7 +78,7 @@ pipeline {
 				script {
 					sh "echo PROD_SERVER_IP=$PROD_SERVER_IP"
 					sh "ssh jenkins@$PROD_SERVER_IP rm -rf /var/www/$HOST/*"
-					sh "scp -r dist/$HOST_ORIGIN/* jenkins@$PROD_SERVER_IP:/var/www/$HOST"
+					sh "scp -r dist/* jenkins@$PROD_SERVER_IP:/var/www/$HOST"
 				}
 			}
 		}
