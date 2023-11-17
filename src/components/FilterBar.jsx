@@ -28,10 +28,9 @@ const FilterBar = ({changeFilter}) => {
         }
         axiosInstance.instance.get(allCategoriesUrl, {
             timeout: 1500,
-        })
-            .then((response) => {
-                setAllCategories(response.data);
-            }).catch(error => console.error(error));
+        }).then((response) => {
+            setAllCategories(response.data);
+        }).catch(error => console.error(error));
     }, [initialized]);
 
     const handleChangeOrigine = (event) => {

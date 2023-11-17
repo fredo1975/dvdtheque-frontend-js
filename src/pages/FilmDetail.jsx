@@ -82,7 +82,7 @@ const FilmDetail = () => {
       setLoading(true)
       setError(false)
       try {
-        let response1 = await  axiosInstance.instance.get(filmDisplay + id, {
+        let response1 = await axiosInstance.instance.get(filmDisplay + id, {
           timeout: 5500,
         });
         setFilm(response1.data)
