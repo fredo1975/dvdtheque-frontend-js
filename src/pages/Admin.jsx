@@ -99,10 +99,10 @@ const Admin = () => {
 
   const remove = (id) => {
     const confir = confirm('Sûr de supprimer le film ?')
-   if (confir) {
+    if (confir) {
       setLoading(true)
       setError(false)
-      axiosInstance.instance.put(removeFilmUrl + id,null, {
+      axiosInstance.instance.put(removeFilmUrl + id, null, {
         timeout: 1500,
       }).then((response) => {
         //console.log(response)
