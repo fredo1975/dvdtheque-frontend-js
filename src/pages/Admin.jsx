@@ -98,8 +98,8 @@ const Admin = () => {
   });
 
   const remove = (id) => {
-    //const confir = confirm('Sûr de supprimer le film ?')
-   // if (confir) {
+    const confir = confirm('Sûr de supprimer le film ?')
+   if (confir) {
       setLoading(true)
       setError(false)
       axiosInstance.instance.put(removeFilmUrl + id,null, {
@@ -114,7 +114,7 @@ const Admin = () => {
         setError(true)
         setLoading(false)
       });
-    //}
+    }
   };
 
   return (
