@@ -63,6 +63,10 @@ const FilterBar = ({changeFilter}) => {
                 sortBy += '+acteur,'
               }else if(sort === 'acteur desc'){
                 sortBy += '-acteur,'
+              }else if(sort === 'dateSortieDvd asc'){
+                sortBy += '+dateSortieDvd,'
+              }else if(sort === 'dateSortieDvd desc'){
+                sortBy += '-dateSortieDvd,'
               }
         }
         return sortBy;
