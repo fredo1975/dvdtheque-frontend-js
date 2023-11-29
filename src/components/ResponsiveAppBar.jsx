@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { useKeycloak } from "@react-keycloak/web";
 import { Link } from "react-router-dom";
 
-const pages = ['Liste des films', 'Ajout', 'Exporter', 'Admin'];
+const pages = ['Liste des films', 'Ajout', 'Exporter', 'Importer', 'Admin'];
 
 const ResponsiveAppBar = () =>  {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -72,6 +72,13 @@ const ResponsiveAppBar = () =>  {
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}>
                                 <Link to="/film-export" className="nav-link">Exporter</Link>
+                            </Button>
+
+                            <Button
+                                key="importer"
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}>
+                                <Link to="/film-import" className="nav-link">Importer</Link>
                             </Button>
 
                             <Button

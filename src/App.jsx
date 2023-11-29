@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import FilmList from "./pages/FilmList";
 import FilmExport from "./pages/FilmExport";
+import FilmImport from "./pages/FilmImport";
 import FilmAdd from "./pages/FilmAdd";
 import Admin from "./pages/Admin";
 import FilmDetail from "./pages/FilmDetail";
@@ -19,6 +20,7 @@ function App() {
            <Route exact path="/" element={<FilmList />} />
            <Route path="/film-add" element={<FilmAdd />} />
            <Route path="/film-export" element={<FilmExport />} />
+           <Route path="/film-import" element={<FilmImport />} />
            <Route path="/admin" element={<Admin />} />
            <Route path="/film-detail/:id" element={<FilmDetail />} />
          </Routes>
