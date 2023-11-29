@@ -34,9 +34,10 @@ const FilmExport = () => {
     axiosInstance.instance.post(constants.exportUrl, _origine,config)
       .then((response) => {
         const now = Date.now();
+        const currentDate = dayjs();
+        const formattedDate = currentDate.format('YYYY-MM-DD-HH-mm-ss');
         const blob = new Blob([response.data], { type: EXCEL_TYPE });
-        
-        const fileName = 'ListeDvdExport-'+now+ EXCEL_EXTENSION
+        const fileName = 'ListeDvdExport-'+formattedDate+'-'+origine+ EXCEL_EXTENSION
         FileSaver.saveAs(blob, fileName);
         setError(false)
         setLoading(false)
