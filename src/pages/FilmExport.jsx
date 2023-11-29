@@ -12,25 +12,32 @@ import Select from '@mui/material/Select';
 import * as constants from "../helpers/constants";
 import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
+import * as FileSaver from 'file-saver';
+import dayjs from 'dayjs';
 
 const FilmExport = () => {
   const [origine, setOrigine] = useState(constants.TOUS);
-  const [data, setData] = useState(null);
   const { axiosInstance, initialized } = useAxios(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
+  const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  const EXCEL_EXTENSION = '.xlsx';
   const handleChangeOrigine = (event) => {
     setOrigine(event.target.value);
   }
   const exportFile = () => {
     setLoading(true)
     setError(false)
-    const config = { timeout: 6500,headers: {'Content-Type': 'text/plain'} }
-    axiosInstance.instance.post(constants.exportUrl, origine,config)
+    const _origine = origine === 'Tous' ? 'TOUS' : origine
+    console.log('origine',_origine)
+    const config = { timeout: 6500,headers: {'Content-Type': 'application/octet-stream'}, responseType: 'blob' }
+    axiosInstance.instance.post(constants.exportUrl, _origine,config)
       .then((response) => {
-        console.log('exportFile',response)
-        setData(response.data)
+        const now = Date.now();
+        const blob = new Blob([response.data], { type: EXCEL_TYPE });
+        
+        const fileName = 'ListeDvdExport-'+now+ EXCEL_EXTENSION
+        FileSaver.saveAs(blob, fileName);
         setError(false)
         setLoading(false)
       }).catch(error => {
