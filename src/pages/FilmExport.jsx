@@ -30,7 +30,7 @@ const FilmExport = () => {
     setError(false)
     const _origine = origine === 'Tous' ? 'TOUS' : origine
     console.log('origine',_origine)
-    const config = { timeout: 15500,headers: {'Content-Type': 'application/octet-stream'}, responseType: 'blob' }
+    const config = { timeout: 15000,headers: {'Content-Type': 'application/octet-stream'}, responseType: 'blob' }
     axiosInstance.instance.post(constants.exportUrl, _origine,config)
       .then((response) => {
         const now = Date.now();
@@ -45,7 +45,7 @@ const FilmExport = () => {
         console.error(error)
         setError(true)
         setLoading(false)
-      });
+      })
   }
   const resetFilter = () => {
     setOrigine(constants.TOUS)
