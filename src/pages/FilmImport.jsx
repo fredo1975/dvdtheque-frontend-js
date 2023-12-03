@@ -3,7 +3,8 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useStompjs } from "../helpers/stompjs-hook";
 import { useAxios } from "../helpers/axios-hook";
 import * as constants from "../helpers/constants";
 import Spinner from "../components/Spinner";
@@ -12,8 +13,30 @@ import Alert from '@mui/material/Alert';
 const FilmImport = () => {
   const [file, setFile] = useState(null);
   const { axiosInstance, initialized } = useAxios(null);
+  const { stompInitialized,client,message } = useStompjs(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [stompMessage, setStompMessage] = useState(null);
+  /*
+  const client = new Client({
+    brokerURL: import.meta.env.VITE_WS_BACKEND_URL,
+    onConnect: () => {
+      //console.log('connected')
+      client.subscribe('/topic/*', message =>
+        console.log(`Received: ${message.body}`)
+      )
+    },
+  });
+  client.activate()*/
+  useEffect(() => {
+    if (!stompInitialized || !message) {
+      //console.log('FilmImport !stompInitialized')
+      return;
+    }
+    //console.log('FilmImport stompInitialized')
+    console.log('FilmImport message',message)
+    setStompMessage(message)
+  }, [stompInitialized,message])
 
   const importFile = (event) => {
     if (!event) {
@@ -30,8 +53,8 @@ const FilmImport = () => {
     setError(false)
     const formData = new FormData();
     formData.append('file', file);
-    const config = { timeout: 0}
-    axiosInstance.instance.post(constants.importUrl, formData,config)
+    const config = { timeout: 0 }
+    axiosInstance.instance.post(constants.importUrl, formData, config)
       .then((response) => {
         setError(false)
         setLoading(false)
@@ -83,16 +106,16 @@ const FilmImport = () => {
   }));
   return (
     <Box sx={{ flexGrow: 1 }} >
-    {
-      loading && (
-        <Spinner />
-      )
-    }
-    {
-      !loading && error && (
-        <Alert severity="error">Une erreur est survenue</Alert>
-      )
-    }
+      {
+        loading && (
+          <Spinner />
+        )
+      }
+      {
+        !loading && error && (
+          <Alert severity="error">Une erreur est survenue</Alert>
+        )
+      }
       <h2>Importer des films au format Excel ou CSV</h2>
       <h3>Realisateur | Titre | Annee | Acteurs | Origine Film | TMDB ID | Vu | Date Vu | Date insertion | Zonedvd | Rippé |
         RIP Date
@@ -117,6 +140,12 @@ const FilmImport = () => {
             <BootstrapButton variant="contained" onClick={launch} disabled={!file}>Lancer l'import</BootstrapButton>
           </Stack>
         </div>
+      </div>
+
+      <div className="grid-container" >
+      <Stack spacing={2} direction="row">
+      
+      </Stack>
       </div>
     </Box>
   );
