@@ -21,6 +21,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import NameFormatter from "../components/NameFormatter";
+import { useStompjs } from "../helpers/stompjs-hook";
 
 const allTmdbFilmsByTitreUrl = 'films/tmdb/byTitre/';
 const saveFilmUrl = 'films/save/'
@@ -32,7 +33,8 @@ const FilmAdd = () => {
   const [films, setFilms] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
+  const { stompInitialized, client, message } = useStompjs(false);
+  
   const handleChangeOrigine = (event) => {
     setOrigine(event.target.value);
   };

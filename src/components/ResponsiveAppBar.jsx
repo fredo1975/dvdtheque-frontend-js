@@ -6,26 +6,29 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useKeycloak } from "@react-keycloak/web";
 import { Link } from "react-router-dom";
+import { useState } from 'react';
 
 const pages = ['Liste des films', 'Ajout', 'Exporter', 'Importer', 'Admin'];
 
 const ResponsiveAppBar = () =>  {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
+        
     };
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
+        
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
+    const handleCloseNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
+    const handleCloseUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
     };
 
     const { keycloak, initialized } = useKeycloak();

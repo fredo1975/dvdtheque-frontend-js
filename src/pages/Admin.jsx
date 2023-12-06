@@ -17,6 +17,7 @@ import NameFormatter from "../components/NameFormatter";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
+import { useStompjs } from "../helpers/stompjs-hook";
 
 const removeFilmUrl = '/films/remove/'
 
@@ -31,6 +32,7 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [removed, setRemoved] = useState(false);
+  const { stompInitialized, client, message } = useStompjs(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

@@ -25,6 +25,7 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
+import { useStompjs } from "../helpers/stompjs-hook";
 
 const filmDisplay = '/films/byId/'
 const filmUpdateUrl = '/films/update/'
@@ -34,6 +35,7 @@ const zonesDvd = [1, 2, 3]
 const formatsDvd = ['DVD', 'BLUERAY']
 const FilmDetail = () => {
   const { axiosInstance, initialized } = useAxios(null)
+  const { stompInitialized, client, message } = useStompjs(false);
   const [film, setFilm] = useState(null)
   const [origine, setOrigine] = useState(null)
   const [zone, setZone] = useState(null)

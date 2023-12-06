@@ -14,12 +14,15 @@ import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
 import * as FileSaver from 'file-saver';
 import dayjs from 'dayjs';
+import { useStompjs } from "../helpers/stompjs-hook";
 
 const FilmExport = () => {
   const [origine, setOrigine] = useState(constants.TOUS);
   const { axiosInstance, initialized } = useAxios(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const { stompInitialized, client, message } = useStompjs(false);
+  
   const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   const EXCEL_EXTENSION = '.xlsx';
   const handleChangeOrigine = (event) => {

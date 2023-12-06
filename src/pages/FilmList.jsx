@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
 import * as constants from "../helpers/constants";
+import { useStompjs } from "../helpers/stompjs-hook";
 
 const paginatedSearchUrl = constants.paginatedSearch
 
@@ -27,7 +28,8 @@ const FilmList = () => {
   const [newSort, setNewSort] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-
+  const { stompInitialized, client, message } = useStompjs(false);
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };

@@ -9,35 +9,41 @@ import { useAxios } from "../helpers/axios-hook";
 import * as constants from "../helpers/constants";
 import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
+import Grid from '@mui/material/Grid';
 
 const FilmImport = () => {
   const [file, setFile] = useState(null);
   const { axiosInstance, initialized } = useAxios(null);
-  const { stompInitialized,client,message } = useStompjs(null);
+  const { stompInitialized, client, message } = useStompjs(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [stompMessage, setStompMessage] = useState(null);
-  /*
-  const client = new Client({
-    brokerURL: import.meta.env.VITE_WS_BACKEND_URL,
-    onConnect: () => {
-      //console.log('connected')
-      client.subscribe('/topic/*', message =>
-        console.log(`Received: ${message.body}`)
-      )
-    },
-  });
-  client.activate()*/
+  const [messageHistory, setMessageHistory] = useState([]);
+  const [index, setIndex] = useState(1);
   useEffect(() => {
-    if (!stompInitialized || !message) {
-      //console.log('FilmImport !stompInitialized')
-      return;
-    }
-    //console.log('FilmImport stompInitialized')
-    console.log('FilmImport message',message)
+    //console.log('FilmImport message',message)
     setStompMessage(message)
-  }, [stompInitialized,message])
+    parseStompMessage(message)
+  }, [stompInitialized, message])
 
+  const parseStompMessage = (message) => {
+    if (!message || Object.keys(message).length === 0) {
+      //setMessageHistory([])
+      return
+    }
+    const _message = JSON.parse(message)
+    //console.log('parseStompMessage message', _message)
+    const newIndex = index + 1
+    const arr = [{
+      index: index,
+      status: _message.status,
+      timing: _message.timing,
+      titre: _message.film?.titre
+    },...messageHistory]
+    //console.log('parseStompMessage message', _message)
+    setMessageHistory(arr)
+    setIndex(newIndex)
+  }
   const importFile = (event) => {
     if (!event) {
       return
@@ -51,6 +57,7 @@ const FilmImport = () => {
   const launch = () => {
     setLoading(true)
     setError(false)
+    setMessageHistory([])
     const formData = new FormData();
     formData.append('file', file);
     const config = { timeout: 0 }
@@ -97,7 +104,6 @@ const FilmImport = () => {
     backgroundColor: '#343a40;',
     width: 1,
   })
-
   const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: '#343a40;',
     '&:hover': {
@@ -120,7 +126,6 @@ const FilmImport = () => {
       <h3>Realisateur | Titre | Annee | Acteurs | Origine Film | TMDB ID | Vu | Date Vu | Date insertion | Zonedvd | Rippé |
         RIP Date
         | Dvd Format | Date Sortie DVD</h3>
-
       <div className="grid-container" >
         <div className="grid-item" >
           <Stack spacing={2} direction="row">
@@ -143,9 +148,15 @@ const FilmImport = () => {
       </div>
 
       <div className="grid-container" >
-      <Stack spacing={2} direction="row">
-      
-      </Stack>
+        <Stack spacing={2} direction="row">
+          <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 1, sm: 1, md: 1 }}>
+            {messageHistory && messageHistory.map(m => (
+              <Grid item md={1} key={m.index}>
+                {m.status} - {m?.titre} - {m.timing}
+              </Grid>
+            ))}
+          </Grid>
+        </Stack>
       </div>
     </Box>
   );
