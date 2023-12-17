@@ -38,7 +38,7 @@ const FilmImport = () => {
       return
     }
     const _message = JSON.parse(message)
-    console.log('parseStompMessage message', _message)
+    //console.log('parseStompMessage message', _message)
     const newIndex = index + 1
     const arr = [{
       index: index,
