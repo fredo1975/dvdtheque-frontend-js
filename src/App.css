@@ -47,3 +47,11 @@ spacer {
   height: 351px;
   width: 231px;
 }
+
+.errorImport {
+  color: red;
+}
+
+.okImport {
+  color: green;
+}

@@ -9,7 +9,12 @@ import { useAxios } from "../helpers/axios-hook";
 import * as constants from "../helpers/constants";
 import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
-import Grid from '@mui/material/Grid';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const FilmImport = () => {
   const [file, setFile] = useState(null);
@@ -20,6 +25,7 @@ const FilmImport = () => {
   const [stompMessage, setStompMessage] = useState(null);
   const [messageHistory, setMessageHistory] = useState([]);
   const [index, setIndex] = useState(1);
+  const [timing, setTiming] = useState(0);
   useEffect(() => {
     //console.log('FilmImport message',message)
     setStompMessage(message)
@@ -32,17 +38,22 @@ const FilmImport = () => {
       return
     }
     const _message = JSON.parse(message)
-    //console.log('parseStompMessage message', _message)
+    console.log('parseStompMessage message', _message)
     const newIndex = index + 1
     const arr = [{
       index: index,
+      id: _message.film?.id,
       status: _message.status,
       timing: _message.timing,
-      titre: _message.film?.titre
-    },...messageHistory]
+      titre: _message.film?.titre,
+      statusValue: _message.statusValue,
+    }, ...messageHistory]
     //console.log('parseStompMessage message', _message)
     setMessageHistory(arr)
     setIndex(newIndex)
+    if ('IMPORT_COMPLETED_SUCCESS' === _message.status) {
+      setTiming(_message.timing)
+    }
   }
   const importFile = (event) => {
     if (!event) {
@@ -148,14 +159,50 @@ const FilmImport = () => {
       </div>
 
       <div className="grid-container" >
+        <Stack spacing={2} direction="row" padding={2}>
+          <p>Timing : {timing}</p>
+        </Stack>
         <Stack spacing={2} direction="row">
-          <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 1, sm: 1, md: 1 }}>
-            {messageHistory && messageHistory.map(m => (
-              <Grid item md={1} key={m.index}>
-                {m.status} - {m?.titre} - {m.timing}
-              </Grid>
-            ))}
-          </Grid>
+          <TableContainer component={Paper}>
+            <Table >
+              <TableBody>
+                {messageHistory && messageHistory.map(m => (
+                  <TableRow key={m.index}>
+                    
+                      {
+                        m.statusValue === 1 && (
+                          <TableCell align="left" sx={{ minWidth: 20 }} >
+                          <div className='okImport'>{m.status}</div>
+                          </TableCell>
+                        )
+                      }
+                      {
+                        m.statusValue === 0 && (
+                          <TableCell align="left" sx={{ minWidth: 20 }} >
+                          <div className='errorImport'>{m.status}</div>
+                          </TableCell>
+                        )
+                      }
+                      {
+                        m.statusValue === 1 && (
+                          <TableCell align="left" sx={{ minWidth: 20 }}>
+                            <div className='okImport'>{m?.titre}</div>
+                          </TableCell>
+                          )
+                      }
+                    {
+                        m.statusValue === 0 && (
+                          <TableCell align="left" sx={{ minWidth: 20 }}>
+                            <div className='errorImport'>{m?.titre}</div>
+                          </TableCell>
+                          )
+                      }
+                    <TableCell align="left" sx={{ minWidth: 20 }}>{m.timing}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Stack>
       </div>
     </Box>
