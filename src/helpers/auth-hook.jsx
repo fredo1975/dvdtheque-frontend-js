@@ -8,11 +8,11 @@ export const useAuth = () => {
     
     useEffect(() => {
         if (!initialized) {
-          //console.log('useAuth !initialized !!!!');
+          console.log('useAuth !initialized !!!!');
           return;
         }
         if (keycloak.authenticated) {
-            //console.log('useAuth authenticated !!!!');
+            console.log('useAuth authenticated !!!!');
           }
         }, [keycloak, initialized]);
         
@@ -24,7 +24,7 @@ export const useAuth = () => {
           },
           token: keycloak.token,
         };
-        //console.log('ret',ret);
+        console.log('ret',ret);
         return ret;
         
 };

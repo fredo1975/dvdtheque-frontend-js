@@ -18,7 +18,7 @@ import Paper from '@mui/material/Paper';
 
 const FilmImport = () => {
   const [file, setFile] = useState(null);
-  const { axiosInstance, initialized } = useAxios(null);
+  const { axiosBatchInstance, initialized } = useAxios(null);
   const { stompInitialized, client, message } = useStompjs(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -72,7 +72,7 @@ const FilmImport = () => {
     const formData = new FormData();
     formData.append('file', file);
     const config = { timeout: 0 }
-    axiosInstance.instance.post(constants.importUrl, formData, config)
+    axiosBatchInstance.instance.post(constants.importUrl, formData, config)
       .then((response) => {
         setError(false)
         setLoading(false)
