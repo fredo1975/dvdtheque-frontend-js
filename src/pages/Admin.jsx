@@ -23,7 +23,7 @@ const removeFilmUrl = '/films/remove/'
 
 const Admin = () => {
   const [post, setPost] = useState(null);
-  const { axiosInstance, initialized } = useAxios(null);
+  const {axiosInstance, initialized } = useAxios(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [count, setCount] = useState(0);

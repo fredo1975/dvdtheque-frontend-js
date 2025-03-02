@@ -2,6 +2,7 @@ export const allCategoriesUrl = '/dvdtheque-service/films/genres'
 export const rippedOptions = ['rippé', 'non rippé']
 export const vuOptions = ['vu', 'non vu']
 export const sortByOptions = ['titre asc', 'titre desc', 'realisateur asc', 'realisateur desc', 'acteur asc', 'acteur desc', 'annee asc', 'annee desc','dateSortieDvd asc','dateSortieDvd desc']
+export const allocineSortByOptions = ['creationDate asc', 'creationDate desc']
 export const DVD = 'DVD'
 export const EN_SALLE = 'EN_SALLE'
 export const CANAL_PLUS = 'CANAL_PLUS'
