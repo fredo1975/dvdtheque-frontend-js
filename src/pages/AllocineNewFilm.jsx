@@ -49,7 +49,7 @@ const AllocineNewFilm = () => {
             setError(false)
             try {
                 let response = await axiosAllocineInstance.allocine_instance.get(constants.allocinePaginatedSearch, {
-                    timeout: 2500,
+                    timeout: 4500,
                     params: {
                         query: newFilter ? newFilter : constants.allocineDefaultQuery,
                         sort: newSort ? newSort : constants.allocineDefaultSort,
