@@ -41,7 +41,7 @@ const AllocineFilterBar = ({changeFilter}) => {
         return query
     }
     const filter = () => {
-        console.log('filter titre.value='+titre.value)
+        //console.log('filter titre.value='+titre.value)
         const query = buildQuery()
         const sort = buildSort()
         changeFilter(query,sort)
