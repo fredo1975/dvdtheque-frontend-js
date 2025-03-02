@@ -9,6 +9,7 @@ import FilmImport from "./pages/FilmImport";
 import FilmAdd from "./pages/FilmAdd";
 import Admin from "./pages/Admin";
 import FilmDetail from "./pages/FilmDetail";
+import AllocineNewFilm from "./pages/AllocineNewFilm";
 
 function App() {
  return (
@@ -21,6 +22,7 @@ function App() {
            <Route path="/film-add" element={<FilmAdd />} />
            <Route path="/film-export" element={<FilmExport />} />
            <Route path="/film-import" element={<FilmImport />} />
+           <Route path="/allocine-new-film" element={<AllocineNewFilm />} />
            <Route path="/admin" element={<Admin />} />
            <Route path="/film-detail/:id" element={<FilmDetail />} />
          </Routes>

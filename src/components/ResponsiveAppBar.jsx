@@ -8,7 +8,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 
-const pages = ['Liste des films', 'Ajout', 'Exporter', 'Importer', 'Admin'];
+const pages = ['Liste des films', 'Ajout', 'Exporter', 'Importer','Allociné', 'Admin'];
 
 const ResponsiveAppBar = () =>  {
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -82,6 +82,13 @@ const ResponsiveAppBar = () =>  {
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}>
                                 <Link to="/film-import" className="nav-link">Importer</Link>
+                            </Button>
+
+                            <Button
+                                key="allocine"
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: 'white', display: 'block' }}>
+                                <Link to="/allocine-new-film" className="nav-link">Allociné</Link>
                             </Button>
 
                             <Button

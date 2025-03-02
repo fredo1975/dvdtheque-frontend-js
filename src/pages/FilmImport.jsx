@@ -72,7 +72,7 @@ const FilmImport = () => {
     const formData = new FormData();
     formData.append('file', file);
     const config = { timeout: 0 }
-    axiosBatchInstance.instance.post(constants.importUrl, formData, config)
+    axiosBatchInstance.batch_instance.post(constants.importUrl, formData, config)
       .then((response) => {
         setError(false)
         setLoading(false)
