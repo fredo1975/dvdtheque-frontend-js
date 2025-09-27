@@ -10,11 +10,12 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import { useAxios } from "../helpers/axios-hook";
 import * as constants from "../helpers/constants";
+import Cookies from 'js-cookie'; // Ajout
 
 const allCategoriesUrl = '/films/genres'
 
 const FilterBar = ({changeFilter}) => {
-    const [origine, setOrigine] = useState(constants.DVD);
+    const [origine, setOrigine] = useState(Cookies.get('film_origine') || constants.DVD);
     const [categorie, setCategorie] = useState('');
     const [dejavu, setDejavu] = useState('');
     const [rip, setRip] = useState('');
@@ -34,6 +35,7 @@ const FilterBar = ({changeFilter}) => {
     }, [initialized]);
 
     const handleChangeOrigine = (event) => {
+        Cookies.set('film_origine', event.target.value, { expires: 30 });
         setOrigine(event.target.value);
     };
     const handleChangeCategorie = (event) => {
@@ -114,6 +116,7 @@ const FilterBar = ({changeFilter}) => {
         realisateur.value = ''
         acteur.value = ''
         setOrigine('')
+        Cookies.remove('film_origine');
         setCategorie('')
         setDejavu('')
         setRip('')

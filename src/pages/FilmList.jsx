@@ -15,6 +15,7 @@ import Spinner from "../components/Spinner";
 import Alert from '@mui/material/Alert';
 import * as constants from "../helpers/constants";
 import { useStompjs } from "../helpers/stompjs-hook";
+import Cookies from 'js-cookie';
 
 const paginatedSearchUrl = constants.paginatedSearch
 
@@ -30,6 +31,19 @@ const FilmList = () => {
   const [error, setError] = useState(false);
   const { stompInitialized, client, message } = useStompjs(false);
   
+  // Ajout : prise en compte du cookie à l'ouverture de l'onglet
+  useEffect(() => {
+    // On lit la valeur du cookie à chaque "montage" (changement d'onglet)
+    const origine = Cookies.get('film_origine');
+    if (origine) {
+      // On construit un filtre qui prend en compte l'origine
+      // Ici, on suppose que le filtre est de la forme "origine:eq:DVD:AND,"
+      const query = `origine:eq:${origine}:AND,`;
+      setNewFilter(query);
+    }
+  }, []); // [] = au montage seulement
+
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -50,7 +64,7 @@ const FilmList = () => {
       setError(false)
       try {
         let response = await axiosInstance.instance.get(paginatedSearchUrl, {
-          timeout: 2500,
+          timeout: 5000,
           params: {
             query: newFilter ? newFilter === 'allCategory' ? '' : newFilter : constants.defaultQuery,
             sort: newSort ? newSort : constants.defaultSort,
