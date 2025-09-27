@@ -96,8 +96,6 @@ const FilmList = () => {
               <CardActionArea component={Link} to={'/film-detail/' + p.id}>
                 <CardMedia
                   component="img"
-                  height="305"
-                  width="200"
                   image={p.posterPath}
                   title={p.titre} />
                 <CardContent>
