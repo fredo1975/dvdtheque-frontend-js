@@ -120,7 +120,7 @@ const FilmList = () => {
                     p.dvd && p.origine === 'DVD' && p.dvd.ripped &&
                     (
                       <Typography variant="body2" color="text.secondary">
-                        {p.origine} Rippé : &nbsp;<img
+                        {p.dvd.format} Rippé : &nbsp;<img
                           src="assets/img/ok.png"></img>
                       </Typography>
                     )
@@ -129,7 +129,7 @@ const FilmList = () => {
                     p.dvd && p.origine === 'DVD' && !p.dvd.ripped &&
                     (
                       <Typography variant="body2" color="text.secondary">
-                        {p.origine} Rippé : &nbsp;<img
+                        {p.dvd.format} Rippé : &nbsp;<img
                           src="assets/img/ko.png"></img>
                       </Typography>
                     )
