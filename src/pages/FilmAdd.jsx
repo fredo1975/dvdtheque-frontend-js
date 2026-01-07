@@ -123,10 +123,13 @@ const FilmAdd = () => {
               value={origine}
               label="Origine"
               onChange={handleChangeOrigine}>
+              <MenuItem value={constants.AMAZON_PRIME}>Amazon Prime</MenuItem>
+              <MenuItem value={constants.CANAL_PLUS}>Canal +</MenuItem>
+              <MenuItem value={constants.DISNEY_PLUS}>Disney +</MenuItem>
               <MenuItem value={constants.DVD}>Dvd</MenuItem>
               <MenuItem value={constants.EN_SALLE}>En salle</MenuItem>
-              <MenuItem value={constants.CANAL_PLUS}>Canal +</MenuItem>
               <MenuItem value={constants.GOOGLE_PLAY}>Google play</MenuItem>
+              <MenuItem value={constants.NETFLIX}>Netflix</MenuItem>
               <MenuItem value={constants.TV}>Tv</MenuItem>
             </Select>
           </FormControl>

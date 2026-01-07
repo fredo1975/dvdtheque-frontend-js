@@ -30,7 +30,7 @@ import { useStompjs } from "../helpers/stompjs-hook";
 const filmDisplay = '/films/byId/'
 const filmUpdateUrl = '/films/update/'
 const allCategoriesUrl = '/films/genres'
-const allOrigines = ['DVD', 'EN_SALLE', 'CANAL_PLUS', 'GOOGLE_PLAY', 'TV']
+const allOrigines = ['AMAZON_PRIME','CANAL_PLUS','DISNEY_PLUS', 'DVD', 'EN_SALLE', 'GOOGLE_PLAY','NETFLIX', 'TV']
 const zonesDvd = [1, 2, 3]
 const formatsDvd = ['DVD', 'BLUERAY']
 const FilmDetail = () => {
