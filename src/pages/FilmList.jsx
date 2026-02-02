@@ -74,7 +74,7 @@ const FilmList = () => {
         });
         //console.log(response.data.content)
         setPost(response.data.content);
-        setCount(response.data.totalElements)
+        setCount(response.data.page.totalElements)
         setError(false)
         setLoading(false)
       } catch (error) {
