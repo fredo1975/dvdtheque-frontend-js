@@ -3,7 +3,7 @@ pipeline {
 		HOST_ORIGIN = 'dvdtheque-frontend-js'
 		HOST = 'dvdtheque-frontend-js'
 		PROD_SERVER_IP = "192.168.1.106"
-		DEV_SERVER_IP = "192.168.1.100"
+		DEV_SERVER_IP = "192.168.1.107"
 		/*GIT_COMMIT_SHORT = sh(
                 script: "printf \$(git rev-parse --short HEAD)",
                 returnStdout: true
