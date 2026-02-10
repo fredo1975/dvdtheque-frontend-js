@@ -14,6 +14,9 @@ pipeline {
 	}
     //agent { label 'slave01' }
 	agent any
+	tools {
+        nodejs 'Node24' 
+    }
     stages{
 		stage ('Initialize') {
             steps {
